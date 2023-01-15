@@ -1,50 +1,33 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/destructuring-assignment */
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "../../../redux/userAuth";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from 'react-redux';
-import { userActions } from '../../../redux/userAuth';
 
-function UserProtectRouter(props) {
-  const router = useRouter();
+const UserProtectRouter = ({ children }) => {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(userActions.userAddDetails({ name: localStorage.getItem('userName'), token: localStorage.getItem('token') , Id: localStorage.getItem('UserId')}));
-  }, []);
+  const router = useRouter();
 
   const user = useSelector((state) => state?.user?.userToken);
+
+  useEffect(() => {
+    const publicFu = () => {
+      dispatch(
+        userActions.userAddDetails({
+          name: localStorage.getItem("userName"),
+          token: localStorage.getItem("token"),
+          Id: localStorage.getItem("UserId"),
+        })
+      );
+    };
+    publicFu();
+  }, [user]);
+
   if (user) {
-    return props.children;
+    return children;
   }
-  router.push('/user/Login')
-}
+  if (user === null) {
+    router.push("/user/Login");
+  }
+};
+
 export default UserProtectRouter;
-
-// import { useDispatch, useSelector } from "react-redux";
-// import react,{ useEffect } from "react";
-// import { userActions } from '../../../redux/userAuth';
-// import { useRouter } from "next/router";
-// import { redirect } from "next/dist/server/api-utils";
-// import { getRouteMatcher } from "next/dist/shared/lib/router/utils/route-matcher";
-
-
-// export const ProtectRoute = ({ children }) => {
-// const dispatch = useDispatch();
-// const router = useRouter();
-// useEffect(() => {
-//   dispatch(
-//     userActions.userAddDetails({
-//       name: localStorage.getItem("userName"),
-//       token: localStorage.getItem("token"),
-//       Id: localStorage.getItem("UserId"),
-//     })
-//   );
-// }, []);
-
-// // const user = useSelector((state) => state?.user?.userToken);
-// //   if (!user || (!user && window.location.pathname !== "/user/Login")) {
-// //        console.log("razi");
-// //   }
-//   return children;
-// };

@@ -31,7 +31,8 @@ const AllPost = ({userId ,type}) => {
           <div onClick={()=>getOnePost(post.userId,post._id)}>
             <img
               className="rounded-md overflow-hidden h-48 flex items-center object-cover"
-              src={post.img[0]}
+              // src={post.img[0]}
+              src='https://freepngimg.com/thumb/photography/59850-and-instagram-photography-black-logo-white.png  '
               alt="posts"
             />
           </div>

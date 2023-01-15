@@ -12,8 +12,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
   console.log(session?.user?.email);
   console.log(session?.user?.name);
   if (session?.user?.email) {
-    console.log(session?.user?.email);
-    console.log(session?.user?.name);
+ 
     const email = session?.user?.email;
     const name = session?.user?.name;
     const userData = {

@@ -5,19 +5,12 @@ import { useSelector } from "react-redux";
 import PublicRoute from "../../components/User/Routes/PublicRoute";
 
 const Login = () => {
-  const router = useRouter();
-  const user = useSelector((state) => state?.user?.userToken);
-  useEffect(() => {
-    console.log(user, 0);
-    if (user) {
-      router.push("/");
-    }
-  }, []);
+  
   return (
     <>
-      {/* <PublicRoute> */}
+      <PublicRoute>
         <LoginPage />
-      {/* </PublicRoute> */}
+      </PublicRoute>
     </>
   );
 };

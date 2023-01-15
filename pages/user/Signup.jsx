@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import React, {useEffect} from 'react'
 import { useSelector } from "react-redux";
+import PublicRoute from '../../components/User/Routes/PublicRoute';
 import SignupPage from "../../components/User/Signup/Signup"
 
 const Signup = () => {
@@ -9,7 +10,9 @@ const Signup = () => {
  
   return (
     <>
+    <PublicRoute>
       <SignupPage />
+    </PublicRoute>
     </>
   )
 }

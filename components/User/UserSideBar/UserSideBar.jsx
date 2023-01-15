@@ -11,7 +11,7 @@ import { MdOutlineNotifications } from "react-icons/md";
 import { AiOutlineSave } from "react-icons/ai";
 import { DiGitPullRequest } from "react-icons/di";
 import Link from "next/link";
-import { FiSettings } from "react-icons/fi";
+import { FiSettings } from "react-icons/fi";FiSettings
 import { sideBarAction } from "../../../redux/sideBar";
 import { useRouter } from "next/router";
 import AddPost from "../AddPost/AddPost";
@@ -27,7 +27,6 @@ function UserSideBar() {
     { name: "Messages", link: "/user/Messages", icon: BiMessageSquareDetail },
     { name: "Notifications",link: "/user/notifications", icon: MdOutlineNotifications},
     { name: "Request", link: "/user/request", icon: DiGitPullRequest },
-    { name: "Saved Post", link: "/user/savedPost", icon: AiOutlineSave },
     { name: "Create", link: "/user/create", icon: BiVideo },
     { name: "settings", link: "/user/settings", icon: FiSettings },
   ];

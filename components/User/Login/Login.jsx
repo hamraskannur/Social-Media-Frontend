@@ -13,7 +13,6 @@ import {
 } from "./functions";
 
 function Login() {
-  console.log(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
 
   const router = useRouter();
   const dispatch = useDispatch();

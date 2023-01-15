@@ -1,38 +1,27 @@
-import React, { useEffect , useState} from 'react'
-import NavBar from '../../components/User/NavBar/NavBar';
-import ProfilePage from '../../components/User/ProfilePage/ProfilePage';
-import UserSideBar from '../../components/User/UserSideBar/UserSideBar';
-import Suggestion from '../../components/User/Suggestion/Suggestion';
-import { getMyProfile } from '../../Api/userApi/userApi';
+import React, { useEffect, useState } from "react";
+import NavBar from "../../components/User/NavBar/NavBar";
+import UserSideBar from "../../components/User/UserSideBar/UserSideBar";
+import Suggestion from "../../components/User/Suggestion/Suggestion";
+import MyAccount from "../../components/User/ProfilePage/MyAccount";
+import UserProtectRouter from "../../components/User/Routes/UserProtectRouter";
 
-const MyAccount = () => {
-  const [userData, setUserData] = useState()
-  let newUserData;
-  useEffect(()=>{
-   const myProfile = async() =>{
-    newUserData = await getMyProfile()
-    setUserData(newUserData)
-   }
-   myProfile()
-  },[userData])
-  console.log("userData",1);
-  console.log(userData);
-
-console.log("userData",1);
+const MyAccountPage = () => {
   return (
-    <div className='bg-[#F3F3F6]'>
-    <NavBar />
-    <div className="flex ">
-      <UserSideBar/>
-      <div className='w-6/12 max-sm:w-full max-md:w-full max-lg:w-full'>
-      { userData && <ProfilePage userData={ userData[0] } type={true}/>}
+    <UserProtectRouter>
+      <div className="bg-[#F3F3F6]">
+        <NavBar />
+        <div className="flex ">
+          <UserSideBar />
+          <div className="w-6/12 max-sm:w-full max-md:w-full max-lg:w-full">
+            <MyAccount />
+          </div>
+          <div className=" max-sm:hidden max-md:hidden max-lg:hidden">
+            <Suggestion />
+          </div>
         </div>
-        <div className=' max-sm:hidden max-md:hidden max-lg:hidden'>
-        <Suggestion />
-        </div>
-    </div>
-  </div>    
-  )
-}
+      </div>
+    </UserProtectRouter>
+  );
+};
 
-export default MyAccount
+export default MyAccountPage;
