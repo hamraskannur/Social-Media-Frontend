@@ -18,36 +18,32 @@ import AddPost from "../AddPost/AddPost";
 import { userActions } from "../../../redux/userAuth";
 
 function UserSideBar() {
+  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
+
   const menus = [
     { name: "Home", link: "/", icon: BiHomeAlt },
     { name: "Messages", link: "/user/Messages", icon: BiMessageSquareDetail },
-    {
-      name: "Notifications",
-      link: "/user/notifications",
-      icon: MdOutlineNotifications,
-    },
+    { name: "Notifications",link: "/user/notifications", icon: MdOutlineNotifications},
     { name: "Request", link: "/user/request", icon: DiGitPullRequest },
     { name: "Saved Post", link: "/user/savedPost", icon: AiOutlineSave },
     { name: "Create", link: "/user/create", icon: BiVideo },
     { name: "settings", link: "/user/settings", icon: FiSettings },
   ];
+  
   const sideBar = useSelector((state) => state?.sideBar?.sideBar);
-  const [showModal, setShowModal] = useState(false);
+
   const logOut = (e) => {
     localStorage.clear();
     dispatch(userActions.userLogout());
     router.push("/user/Login");
   };
+
   return (
     <div className="h-full sticky top-16 ">
       <div className=" max-sm:absolute max-md:absolute max-lg:absolute border-r-4 border-slate-700 ">
-        <div
-          className={`bg-white h-[92vh] ${
-            sideBar ? "w-72" : "w-16"
-          } duration-500   text-black px-4  `}
-        >
+        <div className={`bg-white h-[92vh]  ${sideBar ? "w-72" : "w-16"} duration-500   text-black px-4  `}>
           <div className="py-3 flex justify-end">
             <HiMenuAlt3
               size={26}
@@ -60,7 +56,7 @@ function UserSideBar() {
               <Link
                 href={`${menu?.link}`}
                 key={menu?.name}
-                className="group flex items-center text-sm gap-3.5  font-medium p-2 hover:bg-[#bbc0c7]  rounded-md"
+                className={`${router.pathname === menu?.link ? "bg-[#bbc0c7] " : ""} group flex items-center text-sm gap-3.5  font-medium p-2 hover:bg-[#bbc0c7]  rounded-md`}
               >
                 <div>{React.createElement(menu?.icon, { size: "20" })}</div>
                 <h2

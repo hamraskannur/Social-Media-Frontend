@@ -1,14 +1,16 @@
-import React, { useState } from "react";
-import { AiOutlineCloseCircle } from "react-icons/ai";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 import S3 from "aws-sdk/clients/s3";
-import { addPost } from "../../../Api/userApi/postRequest";
+import { addPost } from '../../../Api/userApi/postRequest';
+import { AddPostActions } from '../../../redux/AddPost'
 
 export default function AddPost({ AddPost, setAddPost }) {
   const [files, setFile] = useState([]);
   const [ImageLinks, setImageLinks] = useState([]);
-
   const [message, setMessage] = useState();
   const [description, setDescription] = useState("");
+  const dispatch= useDispatch()
 
   const S3_BUCKET = process.env.NEXT_PUBLIC_NAME;
   const accessKeyId = process.env.NEXT_PUBLIC_ACCESS_KEY_ID;
@@ -34,6 +36,7 @@ export default function AddPost({ AddPost, setAddPost }) {
       }
     }
   };
+
   const removeImage = (i) => {
     setFile(files.filter((x) => x.name !== i));
   };
@@ -73,6 +76,7 @@ export default function AddPost({ AddPost, setAddPost }) {
         setImageLinks([])
         object.imageLinks=null
         object.description=null
+        dispatch(AddPostActions.postAdd())
         setAddPost(false)
       }else{
         setMessage("err");

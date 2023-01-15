@@ -82,7 +82,7 @@ function Signup() {
                     value={enteredName}
                     name="name"
                     type="text"
-                    className="border-green-600 peer placeholder-transparent h-10 w-full border-b-2 text-gray-900 focus:outline-none focus:borer-rose-600"
+                    className="border-gray-700 peer placeholder-transparent h-10 w-full border-b-2 text-gray-900 focus:outline-none focus:borer-rose-600"
                     placeholder="name"
                   />
                   <label
@@ -102,7 +102,7 @@ function Signup() {
                     value={username}
                     name="name"
                     type="text"
-                    className="border-green-600 peer placeholder-transparent h-10 w-full border-b-2 text-gray-900 focus:outline-none focus:borer-rose-600"
+                    className="border-gray-700 peer placeholder-transparent h-10 w-full border-b-2 text-gray-900 focus:outline-none focus:borer-rose-600"
                     placeholder="name"
                   />
                   <label
@@ -122,7 +122,7 @@ function Signup() {
                     }}
                     name="email"
                     type="email"
-                    className="border-green-600 peer placeholder-transparent h-10 w-full border-b-2 text-gray-900 focus:outline-none focus:borer-rose-600"
+                    className="border-gray-700 peer placeholder-transparent h-10 w-full border-b-2 text-gray-900 focus:outline-none focus:borer-rose-600"
                     placeholder="Email address"
                   />
                   <label
@@ -142,7 +142,7 @@ function Signup() {
                     id="Username"
                     name="Username"
                     type="date"
-                    className="border-green-600 peer placeholder-transparent h-10 w-full border-b-2 text-gray-900 focus:outline-none focus:borer-rose-600"
+                    className="border-gray-700 peer placeholder-transparent h-10 w-full border-b-2 text-gray-900 focus:outline-none focus:borer-rose-600"
                     placeholder="Email address"
                   />
                   <label
@@ -162,7 +162,7 @@ function Signup() {
                     name="PhoneNo"
                     type="number"
                     value={enteredPhoneNo}
-                    className="border-green-600 peer placeholder-transparent h-10 w-full border-b-2 text-gray-900 focus:outline-none focus:borer-rose-600"
+                    className="border-gray-700 peer placeholder-transparent h-10 w-full border-b-2 text-gray-900 focus:outline-none focus:borer-rose-600"
                     placeholder="Email address"
                   />
                   <label
@@ -183,7 +183,7 @@ function Signup() {
                       id="password"
                       name="password"
                       type={passwordShown ? "text" : "password"}
-                      className="border-green-600 peer placeholder-transparent h-10 w-full border-b-2 text-gray-900 focus:outline-none focus:borer-rose-600"
+                      className="border-gray-700 peer placeholder-transparent h-10 w-full border-b-2 text-gray-900 focus:outline-none focus:borer-rose-600"
                       placeholder="Password"
                     />
                     <img
@@ -222,7 +222,7 @@ function Signup() {
                       value={enteredRepeatPassword}
                       name="password"
                       type={repeatPasswordShown ? "text" : "password"}
-                      className="border-green-600 peer placeholder-transparent h-10 w-full border-b-2 text-gray-900 focus:outline-none focus:borer-rose-600"
+                      className="border-gray-700 peer placeholder-transparent h-10 w-full border-b-2 text-gray-900 focus:outline-none focus:borer-rose-600"
                       placeholder="Password"
                     />
                     <img
@@ -258,11 +258,16 @@ function Signup() {
                 >
                   Have an account? Login
                 </small>
-
+             
+               
+              </div>
+                <div className="flex items-center justify-center border-none" >
                 {ErrMessage && (
                   <small className="text-red-600">{ErrMessage}</small>
                 )}
-                <div className="relative">
+                </div>
+
+                <div className="relative border-none">
                   <button
                     onClick={signupHandler}
                     type="button"
@@ -272,8 +277,6 @@ function Signup() {
                   </button>
                 </div>
              
-               
-              </div>
             </div>
           </div>
         </div>

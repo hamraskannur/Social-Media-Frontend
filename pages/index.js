@@ -5,12 +5,13 @@ import NavBar from "../components/User/NavBar/NavBar";
 import Post from "../components/User/Posts/Posts";
 import Suggestion from "../components/User/Suggestion/Suggestion";
 import UserSideBar from "../components/User/UserSideBar/UserSideBar";
-
+import { useSelector } from "react-redux";
 
 function Home() {
  
   const [posts, setPosts] = useState([]);
   let newPost;
+  const update=useSelector((state) => state.addPost.AddPost)
 
   
   useEffect(() => {
@@ -20,7 +21,7 @@ function Home() {
       setPosts(newPost);
     };
     getPost();
-  }, []);
+  }, [update===true]);
 
   return (
     <div className="bg-[#F3F3F6]">
