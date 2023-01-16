@@ -1,4 +1,4 @@
-import { login } from '../../../Api/userApi/userAuthRequest';
+import { login } from "../../../Api/userApi/userAuthRequest";
 
 export const emailChangeHandler = (event, setEnteredEmail) => {
   setEnteredEmail(event.target.value);
@@ -9,29 +9,42 @@ export const passwordChangeHandler = (event, setEnteredPassword) => {
 };
 
 export const showPassword = (passwordShown, setPasswordShown) => {
-  if (passwordShown) { setPasswordShown(false); } else { setPasswordShown(true); }
+  if (passwordShown) {
+    setPasswordShown(false);
+  } else {
+    setPasswordShown(true);
+  }
 };
 
 export const submitHandler = async (
-  event,
   enteredEmail,
   enteredPassword,
   setErrMessage,
-  setResponse,
+  setResponse
 ) => {
-  event.preventDefault();
-  if (enteredEmail.includes('@') && enteredEmail.trim().length > 7) {
-    if (enteredPassword.trim().length > 5) {
-      const response = await login({
-        email: enteredEmail,
-        password: enteredPassword,
-      });
-      console.log(response);
-      setResponse(response);
+  console.log("money");
+  if (enteredEmail.trim().length > 0) {
+    if (enteredPassword.trim().length > 0) {
+      if (enteredEmail.includes("@") && enteredEmail.trim().length > 7) {
+        if (enteredPassword.trim().length > 5) {
+          const response = await login({
+            email: enteredEmail,
+            password: enteredPassword,
+          });
+          console.log(response);
+          setResponse(response);
+        } else {
+          setErrMessage("password minimum 5 numbers");
+        }
+      } else {
+        setErrMessage("wrong email");
+      }
     } else {
-      setErrMessage('password minimum 5 numbers');
+      setErrMessage("fill Password");
     }
   } else {
-    setErrMessage('wrong email');
+    console.log("money2");
+
+    setErrMessage("fill email");
   }
 };

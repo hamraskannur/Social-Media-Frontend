@@ -6,12 +6,12 @@ import UserProtectRouter from "../../components/User/Routes/UserProtectRouter";
 
 const EditProfilePage = () => {
   return (
-    <UserProtectRouter>
+    <UserProtectRouter>  
       <div className="bg-[#F3F3F6]">
         <NavBar />
         <div className="flex ">
           <UserSideBar />
-          <div className="justify-center items-center w-6/12 max-sm:w-full max-md:w-full max-lg:w-full">
+          <div className="justify-center items-center  max-sm:w-full max-md:w-full max-lg:w-full">
             <EditProfile />
           </div>
         </div>

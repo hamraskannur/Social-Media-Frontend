@@ -20,7 +20,7 @@ const Post = () => {
   return (
     <div>
       {posts.map((post) => (
-        <Posts post={post} />
+        <Posts post={post} key={post?._id} />
       ))}
     </div>
   );

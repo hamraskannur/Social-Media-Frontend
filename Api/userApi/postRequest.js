@@ -4,7 +4,7 @@ export const addPost = async (formData) => {
   const { data } = await userApi.post("/addPost", formData, {
     withCredentials: true,
     headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
+      Authorization: "Bearer " + localStorage.getItem("token"), 
     },
   });
   return data;

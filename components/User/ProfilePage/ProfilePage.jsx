@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import Router from "next/router";
 import { BsFillPeopleFill } from "react-icons/bs";
 import AllPost from "./AllPost";
+import PrivatePage from "./privatePage";
 
-const ProfilePage = ({ userData , type }) => {
+const ProfilePage = ({ userData, type }) => {
   const editUser = () => {
     Router.push("/user/EditProfile");
   };
-
   return (
     <div
       className=" bg-white  shadow:lg
@@ -34,48 +34,44 @@ const ProfilePage = ({ userData , type }) => {
             {userData?.username ? userData.username : ""}
           </h2>
           <div className="text-heavy-metal-500 leading-4">
-            {userData?.place ? userData.place : "place"},
-            {userData?.country
-              ? userData.country
-              : "country"}
+            {userData?.city ? userData.city : "place"},
+            {userData?.country ? userData.country : "country"}
           </div>
           <p className="my-3 max-w-6xl text-sm">
-            {userData?.description
-              ? userData?.description
-              : ""}
+            {userData?.description ? userData?.description : ""}
           </p>
           <div className="flex justify-end mr-5">
-          {type && (
-        <button
-          onClick={editUser}
-          class="ml-5 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1  px-4 rounded-l"
-        >
-          edit
-        </button>
-      )}
+            {type && (
+              <button
+                onClick={editUser}
+                className="ml-5 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1  px-4 rounded-l"
+              >
+                edit
+              </button>
+            )}
           </div>
-          <div className="flex">
 
-   {!type && (
-        <button
-          onClick={editUser}
-          class="flex justify-between bg-slate-700 hover:bg-gray-400 text-white font-bold py-1  px-4 rounded-l"
-        >
-          follow
-        </button>
-      )}
-       {!type && (
-        <button
-          onClick={editUser}
-          class=" ml-5 flex justify-between bg-slate-700 hover:bg-gray-400 text-white font-bold py-1  px-4 rounded-l"
-        >
-          Message
-        </button>
-      )}
+          <div className="flex">
+            {!type && (
+              <button
+                onClick={editUser}
+                className="flex justify-between bg-slate-700 hover:bg-gray-400 text-white font-bold py-1  px-4 rounded-l"
+              >
+                follow
+              </button>
+            )}
+            {!type && (
+              <button
+                onClick={editUser}
+                className=" ml-5 flex justify-between bg-slate-700 hover:bg-gray-400 text-white font-bold py-1  px-4 rounded-l"
+              >
+                Message
+              </button>
+            )}
           </div>
         </div>
       </div>
-      <div className="flex  mt-10  justify-center">
+      <div className="flex  mt-2  justify-center">
         <span className="bg-snow-drift-50 rounded-lg shadow-md w-28 shadow-heavy-metal-800 px-5 py-1 cursor-pointer hover:bg-snow-drift-300">
           <div className="flex justify-center">
             <p className="text-lg font-bold text-center ml-3">2</p>
@@ -100,26 +96,37 @@ const ProfilePage = ({ userData , type }) => {
           </div>
           <p className="text-center">Following</p>
         </span>
-      </div>  
-     
-    
+      </div>
 
       <div className="flex items-center justify-center mt-5">
-        <div className="cursor-pointer hover:bg-[#bbc0c7] rounded-md font-medium hover:scale-110">
-          <h1>Post</h1>
-        </div>
-        <div className="ml-14 cursor-pointer hover:bg-[#bbc0c7] rounded-md font-medium hover:scale-110">
-          <h1>Shots</h1>
-        </div>
+        {userData?.public ||
+          (type && (
+            <div>
+              <div className="cursor-pointer hover:bg-[#bbc0c7] rounded-md font-medium hover:scale-110">
+                <h1>Post</h1>
+              </div>
+              <div className="ml-14 cursor-pointer hover:bg-[#bbc0c7] rounded-md font-medium hover:scale-110">
+                <h1>Shots</h1>
+              </div>
+            </div>
+          ))}
         {type && (
           <div className="ml-14 cursor-pointer hover:bg-[#bbc0c7] rounded-md font-medium hover:scale-110">
             <h1>Saved post</h1>
           </div>
         )}
       </div>
-      <div className="mt-5">
-        <AllPost userId={userData?._id} type={type} />
-      </div>
+      {userData?.public ||
+        (type && (
+          <div className="mt-5">
+            <AllPost userId={userData?._id} type={type} />
+          </div>
+        ))}
+      {!userData?.public && !type && (
+        <div className="shadow-md shadow-gray-400">
+          <PrivatePage />
+        </div>
+      )}
     </div>
   );
 };

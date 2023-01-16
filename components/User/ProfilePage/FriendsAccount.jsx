@@ -21,7 +21,7 @@ const FriendsAccount = () => {
 
   return (
     <div>
-   <ProfilePage userData={userData[0]} type={false} />
+   <ProfilePage userData={userData[0]} type={false}  />
     </div>
   )
 }
