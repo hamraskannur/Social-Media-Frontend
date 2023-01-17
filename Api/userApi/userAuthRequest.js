@@ -5,7 +5,7 @@ export const signUp = async (formData) => {
   return data.userSignup;
 };
 export const verifySignUp = async (id, token) => {
-  const response = await userApi.get(`/verifySignUp/${id}/${token}`);
+  const {data} = await userApi.get(`/verifySignUp/${id}/${token}`);
   return data;
 };
 
