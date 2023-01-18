@@ -4,7 +4,7 @@ import Post from "../Posts/Posts";
 
 import { getUserAllPost } from "../../../Api/userApi/postRequest";
 
-const AllPost = ({userId ,type}) => {
+const AllPost = ({userId ,type ,postCount}) => {
   const router = useRouter()
     const [posts, setPosts] = useState([])
   let newPost
@@ -13,6 +13,7 @@ const AllPost = ({userId ,type}) => {
       if(userId){
         newPost = await getUserAllPost(userId);
         setPosts(newPost)
+        postCount(newPost.length)
       }
     };
     getPost();

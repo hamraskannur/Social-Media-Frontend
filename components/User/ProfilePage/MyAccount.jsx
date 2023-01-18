@@ -1,6 +1,6 @@
 import React, { useEffect , useState} from 'react'
 import ProfilePage from '../ProfilePage/ProfilePage';
-import { getMyProfile } from '../../../Api/userApi/userApi';
+import { getMyProfile } from '../../../Api/userApi/ProfileApi';
 
 const MyAccount = () => {
     const [userData, setUserData] = useState()

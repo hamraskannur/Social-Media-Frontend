@@ -2,7 +2,7 @@ import React from "react";
 import AllUser from "./AllUser";
 import Chat from "./Chat";
 import User from "./user";
-import { useSelector } from "react-redux"; 
+import { useSelector } from "react-redux";
 
 const Messages = () => {
   const sideBar = useSelector((state) => state?.sideBar?.sideBar);
@@ -20,8 +20,6 @@ const Messages = () => {
                   className="py-2 px-2 border-2 border-gray-200 rounded-2xl w-full"
                 />
               </div>
-
-          
               <AllUser />
             </div>
 
@@ -37,7 +35,6 @@ const Messages = () => {
                 />
               </div>
             </div>
-
           </div>
         </div>
       </div>

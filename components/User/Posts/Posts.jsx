@@ -10,8 +10,7 @@ import Moment from "react-moment";
 import { FcLike } from "react-icons/fc";
 
 function Post({ post  }) {
-  const [userId, setUserId] = useState("63b5200493b1b5646d9e6b51");
-  const user = useSelector((state) => state?.user?.Id);
+  const userId = useSelector((state) => state?.user?.Id);
   const router = useRouter();
   const [like, setLike] = useState(post?.likes?.includes(userId));
   const [count, setCount] = useState(0)
@@ -54,7 +53,7 @@ function Post({ post  }) {
    shadow-gray-400 rounded-md p-4 mb-5 ml-16 max-w-max mt-6 "
       >
         <div className="flex gap-3">
-          <div>{/* <Avatar img={post.userId.img} /> */}</div>
+          <div><Avatar img={post.userId.ProfileImg?post.userId.ProfileImg:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png"} /></div>
           <div
             onClick={() => getAccountPage(post?.userId?._id)}
             className="grow cursor-pointer"

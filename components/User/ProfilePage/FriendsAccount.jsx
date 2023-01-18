@@ -7,12 +7,11 @@ const FriendsAccount = () => {
     const router = useRouter()
     const { userId }  = router.query
     const [userData, setUserData] = useState([])
-    let newUserData;
     
     useEffect(()=>{
       const myProfile = async() =>{
      if(userId){
-       newUserData = await getFriendsAccount(userId)
+      const newUserData = await getFriendsAccount(userId)
         setUserData(newUserData)
      }
     }
@@ -21,7 +20,7 @@ const FriendsAccount = () => {
 
   return (
     <div>
-   <ProfilePage userData={userData[0]} type={false}  />
+   {userData[0] && <ProfilePage userData={userData[0]} type={false}  />}
     </div>
   )
 }

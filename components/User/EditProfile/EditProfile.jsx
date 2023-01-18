@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { getUserData } from "../../../Api/userApi/userApi";
-import { SaveUserData ,uploadImage } from '../../../Api/userApi/userApi';
+import { getUserData } from "../../../Api/userApi/profileApi";
+import { SaveUserData, uploadImage } from "../../../Api/userApi/profileApi";
+import { TiTick } from "react-icons/ti";
+
 import Head from "next/head";
 
 const EditProfile = () => {
@@ -9,7 +11,10 @@ const EditProfile = () => {
   const [proImg, setProImg] = useState();
   const [coverImg, setCoverImg] = useState();
   const [userData, setUserData] = useState([]);
-  const [ imgErr, setImgErr] = useState('')
+  const [imgErr, setImgErr] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [noUpdates, setNoUpdates] = useState(false);
+
   let user;
   useEffect(() => {
     async function getUser() {
@@ -18,51 +23,63 @@ const EditProfile = () => {
     }
     getUser();
   }, []);
-
   const handleEdit = async (e) => {
     const { name, value } = e.target;
-    setUserData({ userData, [name]: value });
+    setUserData({ ...userData, [name]: value });
   };
 
-  const submitHandler =async () => {
-    if(coverImg){
-      const cover = await uploadImage(coverImg)
-      userData.coverImg=cover
-      setCoverImg(null)
+  const submitHandler = async () => {
+    if (userData.username.trim().length > 0) {
+      if (coverImg) {
+        const cover = await uploadImage(coverImg);
+        userData.coverImg = cover;
+        setCoverImg(null);
+      }
+      if (proImg) {
+        const pro = await uploadImage(proImg);
+        userData.ProfileImg = pro;
+        setProImg(null);
+      }
+      const response = await SaveUserData(userData);
+      if (response?.success === true) {
+        setSuccess(true);
+      } else if (response?.success === "noUpdates") {
+        setNoUpdates(true);
+      } else {
+        setImgErr(response.message);
+      }
+    } else {
+      setImgErr("please fill userName");
     }
-     if(proImg){
-       const pro = await uploadImage(proImg)
-       userData.ProfileImg=pro
-       setProImg(null)
-     }
+  };
 
-     
-  }
-
-  const coverImgChangeHandler = (e) =>{
+  const coverImgChangeHandler = (e) => {
     let file = e.target.files;
     const fileType = file[0]["type"];
     const validImageTypes = ["image/gif", "image/jpeg", "image/png"];
-    if(validImageTypes.includes(fileType)){
-      setCoverImg(e.target.files)
-      setImgErr("")
-    }else{
-      setImgErr("cover image Invalid file type. Only jpeg, png, and gif images are allowed.")
+    if (validImageTypes.includes(fileType)) {
+      setCoverImg(e.target.files);
+      setImgErr("");
+    } else {
+      setImgErr(
+        "cover image Invalid file type. Only jpeg, png, and gif images are allowed."
+      );
     }
-  }
+  };
 
-  const proImgChangeHandler = (e) =>{
+  const proImgChangeHandler = (e) => {
     let file = e.target.files;
     const fileType = file[0]["type"];
     const validImageTypes = ["image/gif", "image/jpeg", "image/png"];
-    if(validImageTypes.includes(fileType)){
-      setProImg(e.target.files)
-      setImgErr("")
-    }else{
-      setImgErr("cover image Invalid file type. Only jpeg, png, and gif images are allowed.")
+    if (validImageTypes.includes(fileType)) {
+      setProImg(e.target.files);
+      setImgErr("");
+    } else {
+      setImgErr(
+        "cover image Invalid file type. Only jpeg, png, and gif images are allowed."
+      );
     }
-  }
-
+  };
 
   return (
     <>
@@ -77,31 +94,63 @@ const EditProfile = () => {
         />
       </Head>
       {/* <section className=" py-1 bg-blueGray-50"> */}
-      <div className="w-full lg:w-8/12 px-4 mx-auto mt-6">
-        <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+      <div className="w-full lg:w-8/12 px-4 mx-auto mt-6 ">
+        <div className=" flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
           <div className="rounded-t bg-white mb-0 px-6 py-6">
             <div className="text-center flex justify-between">
               <h6 className="text-blueGray-700 text-xl font-bold">
                 My account
               </h6>
-            {imgErr && <small className="text-red-600">{imgErr}</small>}
-              <button onClick={submitHandler}
-                className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+
+              {imgErr && <small className="text-red-600">{imgErr}</small>}
+              <button
+                onClick={submitHandler}
+                className="bg-pink-500 h-10 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                 type="button"
               >
                 Save
               </button>
             </div>
+            {success && (
+              <div
+                class="flex items-center w-full m-4 bg-green-200 text-white text-sm font-bold px-4 py-3"
+                role="alert"
+              >
+                <div>{React.createElement(TiTick, { size: "20" })}</div>
+                <p>successfully updated you data</p>
+              </div>
+            )}
+             {noUpdates && (
+              <div
+                class="flex items-center w-full m-4 bg-green-100 text-black text-sm font-bold px-4 py-3"
+                role="alert"
+              >
+                <p>nothing update you data</p>
+              </div>
+            )}
           </div>
           <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
             <form>
-              <div className="relative">
+              <h1 className="  text-blueGray-400 text-sm mt-5 mb-2 font-bold uppercase">
+                Edit image click in that image
+              </h1>
+
+              <div className="">
+                <div className="relative">
+
                 <div
-                onClick={() => coverImageRef.current.click()}
+                  onClick={() => coverImageRef.current.click()}
                   className=" h-40 w-full overflow-hidden flex rounded-md justify-center items-center"
                 >
                   <img
-                    src={coverImg? URL?.createObjectURL(coverImg[0]):"https://media.easemytrip.com/media/Blog/India/637033873695687971/637033873695687971fsrzol.jpg  "}
+                    className="cursor-pointer"
+                    src={
+                      coverImg
+                        ? URL?.createObjectURL(coverImg[0])
+                        : userData?.coverImg
+                        ? userData?.coverImg
+                        : "https://media.easemytrip.com/media/Blog/India/637033873695687971/637033873695687971fsrzol.jpg  "
+                    }
                     alt="cover"
                   />
                   <input
@@ -110,32 +159,43 @@ const EditProfile = () => {
                     onChange={coverImgChangeHandler}
                     ref={coverImageRef}
                     hidden
-
                   />
-                
                 </div>
                 <div className="absolute top-14 left-4 ">
-                  <div  onClick={() => proImageRef.current.click()}  className="w-36 h-36 rounded-full object-cover overflow-hidden shadow-sm  shadow-gray-500">
+                  <div
+                    onClick={() => proImageRef.current.click()}
+                    className="w-36 h-36 rounded-full object-cover overflow-hidden shadow-sm  shadow-gray-500"
+                  >
                     <img
-                      src={ proImg? URL.createObjectURL(proImg[0]):"data:image/png;base64,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"}
+                    className="bg-white"
+                      src={
+                        proImg
+                          ? URL.createObjectURL(proImg[0])
+                          : userData?.ProfileImg
+                          ? userData?.ProfileImg
+                          : "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png"
+                      }
                       alt="avatars"
                     />
-                      <input
-                    type="file"
-                    name="Profile_img"
-                    onChange={proImgChangeHandler }
-                    ref={proImageRef}
-                    hidden
-                  />
+
+                    <input
+                      type="file"
+                      name="Profile_img"
+                      onChange={proImgChangeHandler}
+                      ref={proImageRef}
+                      hidden
+                    />
                   </div>
+                  </div>
+
                 </div>
-              </div>  
-              <h6 className=" text-blueGray-400 text-sm mt-12 mb-6 font-bold uppercase">
+              </div>
+              <h6 className=" text-blueGray-400 text-sm mt-12 mb-6 font-bold uppercase ">
                 User Information
               </h6>
               <div className="flex flex-wrap">
-                <div className="w-full  px-4">
-                  <div className="relative w-full mb-3">
+                <div className="w-full lg:w-6/12 px-4">
+                  <div className=" w-full  mb-3">
                     <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                       Name
                     </label>
@@ -150,7 +210,22 @@ const EditProfile = () => {
                   </div>
                 </div>
                 <div className="w-full lg:w-6/12 px-4">
-                  <div className="relative w-full mb-3">
+                  <div className=" w-full mb-3">
+                    <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      date of birth
+                    </label>
+                    <input
+                      value={userData?.dob}
+                      onChange={handleEdit}
+                      name="dob"
+                      type="date"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      defaultValue="lucky.jesse"
+                    />
+                  </div>
+                </div>
+                <div className="w-full lg:w-6/12 px-4">
+                  <div className=" w-full mb-3">
                     <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                       PhoneNo
                     </label>
@@ -165,7 +240,7 @@ const EditProfile = () => {
                   </div>
                 </div>
                 <div className="w-full lg:w-6/12 px-4">
-                  <div className="relative w-full mb-3">
+                  <div className=" w-full mb-3">
                     <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                       Username
                     </label>
@@ -186,7 +261,7 @@ const EditProfile = () => {
               </h6>
               <div className="flex flex-wrap">
                 <div className="w-full lg:w-12/12 px-4">
-                  <div className="relative w-full mb-3">
+                  <div className=" w-full mb-3">
                     <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                       Address
                     </label>
@@ -201,7 +276,7 @@ const EditProfile = () => {
                   </div>
                 </div>
                 <div className="w-full lg:w-4/12 px-4">
-                  <div className="relative w-full mb-3">
+                  <div className=" w-full mb-3">
                     <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                       City
                     </label>
@@ -216,7 +291,7 @@ const EditProfile = () => {
                   </div>
                 </div>
                 <div className="w-full lg:w-4/12 px-4">
-                  <div className="relative w-full mb-3">
+                  <div className=" w-full mb-3">
                     <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                       Country
                     </label>
@@ -231,7 +306,7 @@ const EditProfile = () => {
                   </div>
                 </div>
                 <div className="w-full lg:w-4/12 px-4">
-                  <div className="relative w-full mb-3">
+                  <div className=" w-full mb-3">
                     <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                       Postal Code
                     </label>
@@ -252,7 +327,7 @@ const EditProfile = () => {
               </h6>
               <div className="flex flex-wrap">
                 <div className="w-full lg:w-12/12 px-4">
-                  <div className="relative w-full mb-3">
+                  <div className=" w-full mb-3">
                     <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                       About me
                     </label>

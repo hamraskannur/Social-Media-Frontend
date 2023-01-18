@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { userApi } from "../../utils/Apis/Apis";
-import { cloudApi } from "../../utils/Apis/Apis";
 
 export const getMyProfile = async () => {
   const { data } = await userApi.get("/getMyProfile", {
@@ -32,11 +31,21 @@ export const uploadImage = async (image) => {
   return data?.secure_url;
 };
 
-export const SaveUserData = async () => {
+export const SaveUserData = async (formData) => {
   const { data } =await userApi.put('/updateUserData',formData, {
     withCredentials: true,
     headers: {
       Authorization: "Bearer " + localStorage.getItem("token"),
     },
   })
+  return data
+}
+export const checkUsePublic = async ()=>{
+  const { data } =await userApi.get('/checkUser', {
+    withCredentials: true,
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  })
+  return data
 }
