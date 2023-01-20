@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react";
 import { ProtectRoute } from "../components/User/Routes/UserProtectRouter";
 import Head from "next/head";
 
+
 export default function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
@@ -12,9 +13,7 @@ export default function App({ Component, pageProps }) {
         <title>Locomate</title>
       </Head>
       <SessionProvider session={pageProps.session}>
-        {/* <ProtectRoute> */}
-          <Component {...pageProps} />
-        {/* </ProtectRoute> */}
+            <Component {...pageProps} />
       </SessionProvider>
     </Provider>
   );

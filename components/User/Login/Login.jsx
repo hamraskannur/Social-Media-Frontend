@@ -33,15 +33,12 @@ function Login() {
       setResponse
     );
     if (response?.Status) {
-      localStorage.setItem("userName", response.name);
       localStorage.setItem("token", response.token);
-      localStorage.setItem("UserId", response.id);
 
       dispatch(
         userActions.userAddDetails({
-          name: response.name,
-          token: response.token,
-          Id: response.id,
+        user: response.user,
+        token: response.token,
         })
       );
       router.push("/");

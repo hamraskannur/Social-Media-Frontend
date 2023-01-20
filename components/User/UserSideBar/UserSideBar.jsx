@@ -19,25 +19,13 @@ import { userActions } from "../../../redux/userAuth";
 import { checkUsePublic } from '../../../Api/userApi/ProfileApi'
 import { requestsCount } from "../../../Api/userApi/followRequest";
 
-function UserSideBar() {
+ const  UserSideBar = ()=> {
   const [showModal, setShowModal] = useState(false);
   const [userPublic , setUserPublic] =useState(false)
   const [count , setCount] =useState(0)
   const dispatch = useDispatch();
   const router = useRouter();
-    useEffect(()=>{
-      const  checkUser = async () => {
-        const response= await checkUsePublic()
-        if(response.success){
-          setUserPublic(true)
-        }else{
-          setUserPublic(false)
-        }
-        const count=await requestsCount()
-        setCount(count)
-      }
-      checkUser()
-    },[])
+
   const menus = [
     { name: "Home", link: "/", icon: BiHomeAlt },
     { name: "Messages", link: "/user/Messages", icon: BiMessageSquareDetail },
@@ -45,20 +33,24 @@ function UserSideBar() {
     { name: "Create", link: "/user/create", icon: BiVideo },
     { name: "settings", link: "/user/settings", icon: FiSettings },
   ];
-  
-  const sideBar = useSelector((state) => state?.sideBar?.sideBar);
+  const user= useSelector((state) => state?.user?.user);
+ useEffect(()=>{
+     setUserPublic(user?.public)
+      setCount(user?.Requests?.length)
 
+ },[])
+
+  const sideBar = useSelector((state) => state?.sideBar?.sideBar);
   const logOut = (e) => {
     localStorage.clear();
     dispatch(userActions.userLogout());
     router.push("/user/Login");
   };
  
-
-
   return (
+    <>
     <div className="h-full sticky top-16 ">
-      <div className=" max-sm:absolute max-md:absolute max-lg:absolute border-r-4 border-slate-700 ">
+      <div className=" max-sm:hidden max-md:hidden max-lg:hidden border-r-4 border-slate-700 ">
         <div className={`bg-white h-[92vh]  ${sideBar ? "w-72" : "w-16"} duration-500   text-black px-4  `}>
           <div className="py-3 flex justify-end">
             <HiMenuAlt3
@@ -182,6 +174,7 @@ function UserSideBar() {
       </div>
       <AddPost AddPost={showModal} setAddPost={setShowModal} />
     </div>
+    </>
   );
 }
 

@@ -21,15 +21,12 @@ import { useSession, signIn, signOut } from "next-auth/react";
     };
     GoogleLogin(userData).then((data) => {
       if (data.Status) {
-        localStorage.setItem("userName", data.name);
         localStorage.setItem("token", data.token);
-        localStorage.setItem("UserId", data.id);
 
         dispatch(
           userActions.userAddDetails({
-            name: data.name,
+            user: data.user,
             token: data.token,
-            Id: data.id,
           })
         );
         router.push("/");

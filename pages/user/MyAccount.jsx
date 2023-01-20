@@ -4,6 +4,7 @@ import UserSideBar from "../../components/User/UserSideBar/UserSideBar";
 import Suggestion from "../../components/User/Suggestion/Suggestion";
 import MyAccount from "../../components/User/ProfilePage/MyAccount";
 import UserProtectRouter from "../../components/User/Routes/UserProtectRouter";
+import BottomBar from "../../components/User/BottomBar/BottomBar";
 
 const MyAccountPage = () => {
   return (
@@ -18,6 +19,9 @@ const MyAccountPage = () => {
           <div className=" max-sm:hidden max-md:hidden max-lg:hidden">
             <Suggestion />
           </div>
+        </div>
+        <div className="md:hidden block sticky bottom-0 z-50 w-full ">
+           <BottomBar/>
         </div>
       </div>
     </UserProtectRouter>

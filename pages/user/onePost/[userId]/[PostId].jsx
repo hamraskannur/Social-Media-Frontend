@@ -5,6 +5,7 @@ import NavBar from '../../../../components/User/NavBar/NavBar'
 import Suggestion from '../../../../components/User/Suggestion/Suggestion'
 import UserSideBar from '../../../../components/User/UserSideBar/UserSideBar'
 import OnePost from '../../../../components/User/onePost/OnePost';
+import BottomBar from '../../../../components/User/BottomBar/BottomBar';
 
 const OnePostPage = () => {
    const [post ,setPosts] = useState()
@@ -32,6 +33,9 @@ const OnePostPage = () => {
         </div>
         
       </div>
+      <div className="md:hidden block sticky bottom-0 z-50 w-full ">
+           <BottomBar/>
+        </div>
     </div>
   )
 }

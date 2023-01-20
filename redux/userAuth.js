@@ -5,21 +5,18 @@ import { HYDRATE } from "next-redux-wrapper";
 const userAuth = createSlice({
   name: 'user',
   initialState: {
-    userToken: '',
-    userName: '',
-    Id:''
+    userToken: null,
+    user: null,
   },
   reducers: {
      userAddDetails(state, actions) {
       const newItem = actions.payload;
-      state.userName = newItem.name;
+      state.user = newItem.user;
       state.userToken = newItem.token;
-      state.Id=newItem.Id
     },
     userLogout(state) {
-      state.userName = '';
+      state.user = '';
       state.userToken = '';
-      state.Id = ""
     },
   },
 });

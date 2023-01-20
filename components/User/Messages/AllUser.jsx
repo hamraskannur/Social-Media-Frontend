@@ -1,86 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getFriendsAccount } from "../../../Api/userApi/postRequest";
 
-const AllUser = () => {
+const AllUser = ({data,currentUserId}) => {
+
+ const [userData, setUserData]=useState(null)
+ useEffect(()=>{
+   const userId = data.members.find((id)=>id != currentUserId)
+   const getUserData= async () =>{
+      const data= await getFriendsAccount(userId)
+      setUserData(data[0])
+   }
+   getUserData()
+ },[])
   return (
     <>
-      <div className="flex flex-row py-4 px-2 justify-center items-center border-b-2">
-        <div className="w-1/4">
+      <div className=" flex flex-row py-4 px-2 h-full w2/6 justify-center items-center border-b-2 hover:bg-[#bbc0c7]">
+        <div className="">
           <img
-            src="https://source.unsplash.com/_7LbC5J-jw4/600x600"
+            src={userData?.ProfileImg}
             className="object-cover h-12 w-12 rounded-full"
             alt=""
           />
         </div>
-        <div className="w-full">
-          <div className="text-lg font-semibold">Luis1994</div>
-          <span className="text-gray-500">Pick me at 9:00 Am</span>
+        <div className="w-full ml-5">
+          <div className="text-lg font-semibold">{userData?.username}</div>
+          <span className="text-gray-500">online</span>
         </div>
       </div>
-      <div className="flex flex-row py-4 px-2 items-center border-b-2 hover:">
-        <div className="w-1/4">
-          <img
-            src="https://source.unsplash.com/otT2199XwI8/600x600"
-            className="object-cover h-12 w-12 rounded-full"
-            alt=""
-          />
-        </div>
-        <div className="w-full">
-          <div className="text-lg font-semibold">Everest Trip 2021</div>
-          <span className="text-gray-500">Hi Sam, Welcome</span>
-        </div>
-      </div>
-      <div className="flex flex-row py-4 px-2 items-center border-b-2 border-l-4 ">
-        <div className="w-1/4">
-          <img
-            src="https://source.unsplash.com/L2cxSuKWbpo/600x600"
-            className="object-cover h-12 w-12 rounded-full"
-            alt=""
-          />
-        </div>
-        <div className="w-full">
-          <div className="text-lg font-semibold">MERN Stack</div>
-          <span className="text-gray-500">Lusi : Thanks Everyone</span>
-        </div>
-      </div>
-      <div className="flex flex-row py-4 px-2 items-center border-b-2">
-        <div className="w-1/4">
-          <img
-            src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
-            className="object-cover h-12 w-12 rounded-full"
-            alt=""
-          />
-        </div>
-        <div className="w-full">
-          <div className="text-lg font-semibold">Javascript Indonesia</div>
-          <span className="text-gray-500">Evan : some one can fix this</span>
-        </div>
-      </div>
-      <div className="flex flex-row py-4 px-2 items-center border-b-2 border-l-4 ">
-        <div className="w-1/4">
-          <img
-            src="https://source.unsplash.com/L2cxSuKWbpo/600x600"
-            className="object-cover h-12 w-12 rounded-full"
-            alt=""
-          />
-        </div>
-        <div className="w-full">
-          <div className="text-lg font-semibold">MERN Stack</div>
-          <span className="text-gray-500">Lusi : Thanks Everyone</span>
-        </div>
-      </div>
-      <div className="flex flex-row py-4 px-2 items-center border-b-2 border-l-4 ">
-        <div className="w-1/4">
-          <img
-            src="https://source.unsplash.com/L2cxSuKWbpo/600x600"
-            className="object-cover h-12 w-12 rounded-full"
-            alt=""
-          />
-        </div>
-        <div className="w-full">
-          <div className="text-lg font-semibold">MERN Stack</div>
-          <span className="text-gray-500">Lusi : Thanks Everyone</span>
-        </div>
-      </div>
+      <hr/>
     </>
   );
 };

@@ -42,7 +42,7 @@ function Comments({ postId, setCount, count }) {
           />
         </div>
 
-        <div className="border-none ml-0 grow rounded-full">
+        <div className="border-none ml-0  grow rounded-full">
           <InputEmoji
             value={newComment}
             onChange={changeComment}

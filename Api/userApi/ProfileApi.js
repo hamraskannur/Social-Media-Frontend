@@ -40,12 +40,3 @@ export const SaveUserData = async (formData) => {
   })
   return data
 }
-export const checkUsePublic = async ()=>{
-  const { data } =await userApi.get('/checkUser', {
-    withCredentials: true,
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  })
-  return data
-}

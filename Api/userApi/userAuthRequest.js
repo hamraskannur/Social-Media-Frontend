@@ -11,13 +11,13 @@ export const verifySignUp = async (id, token) => {
 
 export const login = async (formData) => {
   const { data } = await userApi.post('/login', formData, { withCredentials: true });
-  return data.userLogin;
+  return data;
 };
 
 
 export const GoogleLogin =async (formData) => {
   const { data } = await userApi.post('/googleLogin', formData, { withCredentials: true });
-  return data.userLogin;
+  return data;
 }
 
 

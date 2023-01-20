@@ -11,7 +11,7 @@ const MyAccount = () => {
       setUserData(newUserData)
      }
      myProfile()
-    },[userData])
+    },[])
    
   return (
     <>

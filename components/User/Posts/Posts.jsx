@@ -10,7 +10,7 @@ import Moment from "react-moment";
 import { FcLike } from "react-icons/fc";
 
 function Post({ post  }) {
-  const userId = useSelector((state) => state?.user?.Id);
+  const userId = useSelector((state) => state?.user?.user._id);
   const router = useRouter();
   const [like, setLike] = useState(post?.likes?.includes(userId));
   const [count, setCount] = useState(0)
@@ -50,7 +50,7 @@ function Post({ post  }) {
     <>
       <div
         className=" bg-white  shadow-lg 
-   shadow-gray-400 rounded-md p-4 mb-5 ml-16 max-w-max mt-6 "
+   shadow-gray-400 rounded-md p-4 m-5 mb-5 max-w-max mt-6 "
       >
         <div className="flex gap-3">
           <div><Avatar img={post.userId.ProfileImg?post.userId.ProfileImg:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png"} /></div>

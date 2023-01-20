@@ -33,17 +33,6 @@ export const acceptRequest = async (formData) => {
     return data
 }
 
-export const requestsCount = async () => {
-    const { data } = await userApi.get('/requestsCount', {
-        withCredentials: true,
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      })
-
-    return data.count
-}
-
 export const deleteRequests = async (deleteId) => {
     const { data } = await userApi.delete(`/deleteRequests/${deleteId}`, {
         withCredentials: true,

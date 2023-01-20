@@ -31,7 +31,6 @@ export const submitHandler = async (
             email: enteredEmail,
             password: enteredPassword,
           });
-          console.log(response);
           setResponse(response);
         } else {
           setErrMessage("password minimum 5 numbers");

@@ -2,31 +2,34 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../../redux/userAuth";
 import { useRouter } from "next/router";
+import { getMyProfile } from "../../../Api/userApi/ProfileApi";
 
 const UserProtectRouter = ({ children }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const user = useSelector((state) => state?.user?.userToken);
-
+  const token = useSelector((state) => state?.user?.userToken);
+  let userData;
   useEffect(() => {
-    const publicFu = () => {
-      dispatch(
-        userActions.userAddDetails({
-          name: localStorage.getItem("userName"),
-          token: localStorage.getItem("token"),
-          Id: localStorage.getItem("UserId"),
-        })
-      );
+    const publicFu = async () => {
+      if (token || localStorage.getItem("token")) {
+        userData = await getMyProfile();
+        dispatch(
+          userActions.userAddDetails({
+            token: localStorage.getItem("token"),
+            user: userData[0],
+          })
+        );
+      }
     };
     publicFu();
-  }, [user]);
+    if (!localStorage.getItem("token")) {
+      router.push("/user/Login");
+    }
+  }, [token]);
 
-  if (user) {
+  if (token) {
     return children;
-  }
-  if (user === null) {
-    router.push("/user/Login");
   }
 };
 
