@@ -4,7 +4,7 @@ export const addPost = async (formData) => {
   const { data } = await userApi.post("/addPost", formData, {
     withCredentials: true,
     headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"), 
+      Authorization: "Bearer " + localStorage.getItem("token"),
     },
   });
   return data;
@@ -83,27 +83,63 @@ export const postComment = async (postId, comment) => {
 };
 
 export const getComments = async (postId) => {
-  const { data } = await userApi.get(`/getComment/${postId}`,
-    {
-      withCredentials: true,
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    }
-  );
+  const { data } = await userApi.get(`/getComment/${postId}`, {
+    withCredentials: true,
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  });
   if (data.success) {
     return data.comments;
   }
 };
 
-
 export const getUserAllPost = async (userId) => {
-  const { data } = await userApi.get(`/getUserAllPost/${userId}`,
-  {
+  const { data } = await userApi.get(`/getUserAllPost/${userId}`, {
+    withCredentials: true,
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  });
+  return data.AllPosts;
+};
+
+export const likeMainComment = async (formData) => {
+  const { data } = await userApi.post("/likeMainComment", formData, {
+    withCredentials: true,
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  });
+  return data;
+};
+
+export const postReplayComment = async (formData) => {
+  const { data } = await userApi.post("/postReplayComment", formData, {
+    withCredentials: true,
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  });
+  return data.comments;
+};
+
+export const getReplayComment = async (commentId) => {
+  const { data } = await userApi.get(`/getReplayComment/${commentId}`, {
+    withCredentials: true,
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  });
+  return data.comments
+};
+
+export const likeReplayComment = async (formData) => {
+  const { data } = await  userApi.post('/likeReplayComment',formData, {
     withCredentials: true,
     headers: {
       Authorization: "Bearer " + localStorage.getItem("token"),
     },
   })
-  return data.AllPosts
+  return data
 }

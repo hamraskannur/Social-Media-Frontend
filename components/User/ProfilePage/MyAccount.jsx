@@ -1,21 +1,16 @@
 import React, { useEffect , useState} from 'react'
 import ProfilePage from '../ProfilePage/ProfilePage';
 import { getMyProfile } from '../../../Api/userApi/ProfileApi';
+import { useSelector } from 'react-redux';
 
 const MyAccount = () => {
-    const [userData, setUserData] = useState()
-    let newUserData;
-    useEffect(()=>{
-     const myProfile = async() =>{
-      newUserData = await getMyProfile()
-      setUserData(newUserData)
-     }
-     myProfile()
-    },[])
    
+   
+    const user = useSelector((state) => state?.user?.user);
+
   return (
     <>
-    { userData && <ProfilePage userData={ userData[0] } type={true}/>}
+    { user && <ProfilePage userData={ user} type={true}/>}
     </>
   )
 }

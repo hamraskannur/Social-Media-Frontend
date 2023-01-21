@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const sideBar = createSlice({
   name: 'user',
   initialState: {
-    sideBar: false,
+    sideBar: true,
    },
   reducers: {
     changeSideBar(state, actions) {

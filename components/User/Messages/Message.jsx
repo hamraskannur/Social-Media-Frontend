@@ -61,12 +61,13 @@ const Messages = () => {
                   className="py-2 px-2 border-2 border-gray-200 rounded-2xl w-full"
                 />
               </div>
-              <div className="h-[60vh] ">
+              <div className="h-[70vh] ">
                 {chat?.map((chat) => (
                   <div onClick={() => setCurrentChat(chat)}>
                     <AllUser
                       data={chat}
                       currentUserId={user?._id}
+                      onlineUsers={onlineUsers}
                       key={chat._id}
                     />
                   </div>

@@ -30,3 +30,14 @@ export const AddMessage = async (formData) => {
   })
   return data
 }
+
+export const createChat = async (formData) => {
+  console.log(formData);
+  const { data } = await userApi.post('/createChat',formData,{
+    withCredentials: true,
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  })
+  return data
+}

@@ -5,10 +5,13 @@ import { BsFillPeopleFill } from "react-icons/bs";
 import AllPost from "./AllPost";
 import PrivatePage from "./privatePage";
 import { followUser } from "../../../Api/userApi/followRequest";
+import { createChat } from "../../../Api/userApi/chatRequest";
+import { useRouter } from "next/router";
 
 const ProfilePage = ({ userData, type }) => {
   const [PostCount, setPostCount] = useState(0);
-  const userId = useSelector((state) => state?.user?.Id);
+  const router = useRouter();
+  const userId = useSelector((state) => state?.user.user._id);
   const [follow, setFollow] = useState(userData?.Followers.includes(userId));
   const [Requested, setRequested] = useState(
     userData?.Requests.includes(userId)
@@ -40,6 +43,12 @@ const ProfilePage = ({ userData, type }) => {
     } else {
     }
   };
+
+  const createMessage= async (senderId) => {
+   const response=await createChat({senderId,receiverId:userId})
+   router.push("/user/Messages");
+
+  }
   return (
     <div
       className=" bg-white  shadow:lg
@@ -124,7 +133,7 @@ const ProfilePage = ({ userData, type }) => {
             )}
             {!type && (
               <button
-                onClick={editUser}
+                onClick={()=>createMessage(userData?._id)}
                 className=" ml-5 flex justify-between bg-slate-700 hover:bg-gray-400 text-white font-bold py-1  px-4 rounded-l"
               >
                 Message

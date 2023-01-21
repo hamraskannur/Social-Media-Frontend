@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getFriendsAccount } from "../../../Api/userApi/postRequest";
 
-const AllUser = ({data,currentUserId}) => {
+const AllUser = ({data,currentUserId,onlineUsers}) => {
 
  const [userData, setUserData]=useState(null)
  useEffect(()=>{

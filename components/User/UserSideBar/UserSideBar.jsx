@@ -49,7 +49,7 @@ import { requestsCount } from "../../../Api/userApi/followRequest";
  
   return (
     <>
-    <div className="h-full sticky top-16 ">
+    <div className="h-full sticky top-16  ">
       <div className=" max-sm:hidden max-md:hidden max-lg:hidden border-r-4 border-slate-700 ">
         <div className={`bg-white h-[92vh]  ${sideBar ? "w-72" : "w-16"} duration-500   text-black px-4  `}>
           <div className="py-3 flex justify-end">

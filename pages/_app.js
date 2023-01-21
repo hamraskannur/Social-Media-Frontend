@@ -13,7 +13,9 @@ export default function App({ Component, pageProps }) {
         <title>Locomate</title>
       </Head>
       <SessionProvider session={pageProps.session}>
-            <Component {...pageProps} />
+        {/* <ProtectRoute> */}
+          <Component {...pageProps} />
+        {/* </ProtectRoute> */}
       </SessionProvider>
     </Provider>
   );

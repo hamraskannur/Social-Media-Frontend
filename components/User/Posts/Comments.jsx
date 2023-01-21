@@ -3,8 +3,12 @@ import Avatar from "./Avatar";
 import { postComment, getComments } from "../../../Api/userApi/postRequest";
 import InputEmoji from "react-input-emoji";
 import Comment from "./Comment";
+import { useSelector } from "react-redux";
 
 function Comments({ postId, setCount, count }) {
+  const user=useSelector((state) => state?.user?.user);
+  const ProfileImg = user.ProfileImg
+
   const [newComment, setNewComment] = useState("");
   const [img, setImg] = useState("");
   const [comment, setComment] = useState([]);
@@ -26,6 +30,9 @@ function Comments({ postId, setCount, count }) {
     if (newComment.trim().length === 0) return;
     try {
       const response = await postComment(postId, newComment);
+      console.log(user.username,user.ProfileImg);
+      response.username=user.username
+      response.ProfileImg=user.ProfileImg
       setComment([response, ...comment]);
       setCount(count + 1);
       setNewComment("");
@@ -36,9 +43,7 @@ function Comments({ postId, setCount, count }) {
       <div className="flex mt-3 gap-3 ">
         <div className="mt-2 ">
           <Avatar
-            img={
-              "https://cdn.pixabay.com/photo/2021/04/05/12/39/man-6153298_960_720.jpg"
-            }
+            img={ProfileImg?ProfileImg:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png"}
           />
         </div>
 
@@ -65,7 +70,7 @@ function Comments({ postId, setCount, count }) {
         }
       >
         {comment?.map((comment) => (
-         <Comment comment={comment} />
+         <Comment comment={comment}  />
         ))}
       </div>
     </div>

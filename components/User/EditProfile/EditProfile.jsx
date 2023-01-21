@@ -30,23 +30,29 @@ const EditProfile = () => {
 
   const submitHandler = async () => {
     if (userData.username.trim().length > 0) {
-      if (coverImg) {
-        const cover = await uploadImage(coverImg);
-        userData.coverImg = cover;
-        setCoverImg(null);
-      }
-      if (proImg) {
-        const pro = await uploadImage(proImg);
-        userData.ProfileImg = pro;
-        setProImg(null);
-      }
-      const response = await SaveUserData(userData);
-      if (response?.success === true) {
-        setSuccess(true);
-      } else if (response?.success === "noUpdates") {
-        setNoUpdates(true);
-      } else {
-        setImgErr(response.message);
+      if(userData.name.trim().length > 0){
+
+        if (coverImg) {
+          const cover = await uploadImage(coverImg);
+          userData.coverImg = cover;
+          setCoverImg(null);
+        }
+        if (proImg) {
+          const pro = await uploadImage(proImg);
+          userData.ProfileImg = pro;
+          setProImg(null);
+        }
+        const response = await SaveUserData(userData);
+        if (response?.success === true) {
+          setSuccess(true);
+        } else if (response?.success === "noUpdates") {
+          setNoUpdates(true);
+        } else {
+          setImgErr(response.message);
+        }
+      }else{
+        setImgErr("please fill name");
+
       }
     } else {
       setImgErr("please fill userName");
