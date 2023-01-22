@@ -18,8 +18,8 @@ const AllPost = ({userId ,type ,postCount}) => {
     };
     getPost();
   },[userId]);
- const getOnePost = (userId,PostId) => {
-  router.push(`/user/onePost/${userId}/${PostId}`)
+ const getOnePost = (postUserId,PostId) => {
+  router.push(`/user/onePost/${postUserId}/${PostId}`)
  }
 
 
@@ -32,8 +32,8 @@ const AllPost = ({userId ,type ,postCount}) => {
           <div onClick={()=>getOnePost(post.userId,post._id)}>
             <img
               className="rounded-md overflow-hidden h-48 flex items-center object-cover"
-              // src={post.img[0]}
-              src='https://freepngimg.com/thumb/photography/59850-and-instagram-photography-black-logo-white.png  '
+              src={post.img[0]}
+              // src='https://freepngimg.com/thumb/photography/59850-and-instagram-photography-black-logo-white.png  '
               alt="posts"
             />
           </div>

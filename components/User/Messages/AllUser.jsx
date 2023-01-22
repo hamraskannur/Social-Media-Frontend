@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { getFriendsAccount } from "../../../Api/userApi/postRequest";
 
-const AllUser = ({data,currentUserId,onlineUsers}) => {
-
- const [userData, setUserData]=useState(null)
- useEffect(()=>{
-   const userId = data.members.find((id)=>id != currentUserId)
-   const getUserData= async () =>{
-      const data= await getFriendsAccount(userId)
-      setUserData(data[0])
-   }
-   getUserData()
- },[])
+const AllUser = ({ data, currentUserId, onlineUsers }) => {
+  const [userData, setUserData] = useState(null);
+  useEffect(() => {
+    const userId = data.members.find((id) => id != currentUserId);
+    const getUserData = async () => {
+      const data = await getFriendsAccount(userId);
+      setUserData(data[0]);
+    };
+    getUserData();
+  }, []);
+  console.log(currentUserId);
+  console.log(onlineUsers);
   return (
     <>
       <div className=" flex flex-row py-4 px-2 h-full w2/6 justify-center items-center border-b-2 hover:bg-[#bbc0c7]">
@@ -24,10 +25,11 @@ const AllUser = ({data,currentUserId,onlineUsers}) => {
         </div>
         <div className="w-full ml-5">
           <div className="text-lg font-semibold">{userData?.username}</div>
-          <span className="text-gray-500">online</span>
+          {onlineUsers.map((item)=>(item.userId===userData?._id && <span className="text-gray-500">{onlineUsers.length>1 ? "online" : ""}</span>
+))}
         </div>
       </div>
-      <hr/>
+      <hr />
     </>
   );
 };

@@ -1,145 +1,197 @@
 import { userApi } from "../../utils/Apis/Apis";
 
 export const addPost = async (formData) => {
-  const { data } = await userApi.post("/addPost", formData, {
-    withCredentials: true,
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  });
-  return data;
-};
-
-export const getAllProduct = async () => {
-  const { data } = await userApi.get("/getMyPost", {
-    withCredentials: true,
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  });
-  return data.allPost;
-};
-
-export const getAllPosts = async () => {
-  const { data } = await userApi.get("/getAllPosts", {
-    withCredentials: true,
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  });
-  return data.AllPosts;
-};
-
-export const getOnePost = async (userId, PostId) => {
-  console.log(userId, PostId);
-  const { data } = await userApi.get(`/getOnePost/${userId}/${PostId}`, {
-    withCredentials: true,
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  });
-};
-
-export const getFriendsAccount = async (userId) => {
-  const { data } = await userApi.get(`/getFriendsAccount/${userId}`, {
-    withCredentials: true,
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  });
-  return data.FriendsAccount;
-};
-
-export const likePostReq = async (PostId) => {
-  const { data } = await userApi.get(`/likePostReq/${PostId}`, {
-    withCredentials: true,
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  });
-  return data;
-};
-
-export const postComment = async (postId, comment) => {
-  const { data } = await userApi.post(
-    `/postComment/${postId}`,
-    { comment },
-    {
+  try {
+    const { data } = await userApi.post("/addPost", formData, {
       withCredentials: true,
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
-    }
-  );
-  if (data.success) {
-    const newComment = {
-      ...data.comment,
-      userId: data.comment.userId._id,
-      firstName: data.comment.userId.username,
-    };
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-    return newComment;
+export const getAllProduct = async () => {
+  try {
+    const { data } = await userApi.get("/getMyPost", {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+    return data.allPost;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getAllPosts = async () => {
+  try {
+    const { data } = await userApi.get("/getAllPosts", {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+    return data.AllPosts;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getOnePost = async (userId, PostId) => {
+  try {
+    const { data } = await userApi.get(`/getOnePost/${userId}/${PostId}`, {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+    return data
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getFriendsAccount = async (userId) => {
+  try {
+    const { data } = await userApi.get(`/getFriendsAccount/${userId}`, {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+    return data.FriendsAccount;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const likePostReq = async (PostId) => {
+  try {
+    const { data } = await userApi.get(`/likePostReq/${PostId}`, {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const postComment = async (postId, comment) => {
+  try {
+    const { data } = await userApi.post(
+      `/postComment/${postId}`,
+      { comment },
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    );
+    if (data.success) {
+      const newComment = {
+        ...data.comment,
+        userId: data.comment.userId._id,
+        firstName: data.comment.userId.username,
+      };
+
+      return newComment;
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
 
 export const getComments = async (postId) => {
-  const { data } = await userApi.get(`/getComment/${postId}`, {
-    withCredentials: true,
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  });
-  if (data.success) {
-    return data.comments;
+  try {
+    const { data } = await userApi.get(`/getComment/${postId}`, {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+    if (data.success) {
+      return data.comments;
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
 
 export const getUserAllPost = async (userId) => {
-  const { data } = await userApi.get(`/getUserAllPost/${userId}`, {
-    withCredentials: true,
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  });
-  return data.AllPosts;
+  try {
+    const { data } = await userApi.get(`/getUserAllPost/${userId}`, {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+    return data.AllPosts;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const likeMainComment = async (formData) => {
-  const { data } = await userApi.post("/likeMainComment", formData, {
-    withCredentials: true,
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  });
-  return data;
+  try {
+    const { data } = await userApi.post("/likeMainComment", formData, {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const postReplayComment = async (formData) => {
-  const { data } = await userApi.post("/postReplayComment", formData, {
-    withCredentials: true,
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  });
-  return data.comments;
+  try {
+    const { data } = await userApi.post("/postReplayComment", formData, {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+    return data.comments;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const getReplayComment = async (commentId) => {
-  const { data } = await userApi.get(`/getReplayComment/${commentId}`, {
-    withCredentials: true,
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  });
-  return data.comments
+  try {
+    const { data } = await userApi.get(`/getReplayComment/${commentId}`, {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+    return data.comments;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const likeReplayComment = async (formData) => {
-  const { data } = await  userApi.post('/likeReplayComment',formData, {
-    withCredentials: true,
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  })
-  return data
-}
+  try {
+    const { data } = await userApi.post("/likeReplayComment", formData, {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};

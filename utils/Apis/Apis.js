@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-export const userApi = axios.create({ baseURL:process.env.NEXT_PUBLIC_USER_API }
-);
+export const userApi = axios.create({ baseURL:process.env.NEXT_PUBLIC_USER_API });
 
 export const adminAPI = axios.create({ baseURL:process.env.NEXT_PUBLIC_ADMIN_API });
 

@@ -53,6 +53,7 @@ const Comment = ({ comment }) => {
       const response = await postReplayComment({ commentId, newComment });
       response.username = user.username;
       response.ProfileImg = user.ProfileImg;
+      response.likes=[]
       setAllReplayComment([response, ...AllReplayComment]);
       setReplayCommentCount(replayCommentCount + 1);
       setNewComment("");

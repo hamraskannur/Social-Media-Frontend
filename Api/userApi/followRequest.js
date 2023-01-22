@@ -1,45 +1,60 @@
 import { userApi } from "../../utils/Apis/Apis";
 
 export const followUser = async (formData) => {
-  const { data } = await userApi.put("/followUser", formData, {
-    withCredentials: true,
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  });
-  return data;
+  try {
+    const { data } = await userApi.put("/followUser", formData, {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-
 export const getAllRequest = async () => {
-    const { data } = await userApi.get('/getAllRequest', {
-        withCredentials: true,
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      })
+  try {
+    const { data } = await userApi.get("/getAllRequest", {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
 
-    return data.Request
-}
+    return data.Request;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const acceptRequest = async (formData) => {
-    const { data } = await userApi.put('/acceptRequest',formData, {
-        withCredentials: true,
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      })
+  try {
+    const { data } = await userApi.put("/acceptRequest", formData, {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
 
-    return data
-}
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const deleteRequests = async (deleteId) => {
+  try {
     const { data } = await userApi.delete(`/deleteRequests/${deleteId}`, {
-        withCredentials: true,
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      })
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
 
-    return data
-}
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
