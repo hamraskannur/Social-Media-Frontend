@@ -1,13 +1,16 @@
+import useSWR from "swr";
 import React,{ useState, useEffect } from "react";
 import { getAllPosts } from "../../../Api/userApi/postRequest";
 import Posts from "./Posts";
 import { useSelector } from "react-redux";
-
 const Post = () => {
   const [posts, setPosts] = useState([]);
   let newPost;
   const update = useSelector((state) => state.addPost.AddPost);
 
+
+  // const {data,error}= useSWR("post",getAllPosts)
+ 
   useEffect(() => {
     const getPost = async () => {
       newPost = await getAllPosts();

@@ -16,6 +16,7 @@ function Comments({ postId, setCount, count }) {
   useEffect(() => {
     const getCommentAll = async () => {
       const response = await getComments(postId);
+      console.log(response);
       setComment(response);
       setCount(response.length);
     };
@@ -30,7 +31,6 @@ function Comments({ postId, setCount, count }) {
     if (newComment.trim().length === 0) return;
     try {
       const response = await postComment(postId, newComment);
-      console.log(user.username,user.ProfileImg);
       response.username=user.username
       response.ProfileImg=user.ProfileIm
       response.likes=[]
@@ -72,7 +72,7 @@ function Comments({ postId, setCount, count }) {
         }
       >
         {comment?.map((comment) => (
-         <Comment comment={comment}  />
+         <Comment comment={comment} key={comment?._id} />
         ))}
       </div>
     </div>

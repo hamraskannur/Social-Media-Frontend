@@ -15,7 +15,6 @@ const OnePostPage = () => {
   let newPost;
   useEffect(() => {
     const getPost = async () => {
-      console.log("newPost");
       newPost = await getOnePost(userId, PostId);
       console.log(newPost);
       setPosts(newPost);
@@ -30,7 +29,7 @@ const OnePostPage = () => {
         <div className="flex ">
           <UserSideBar />
           <div className="w-6/12 max-sm:w-full max-md:w-full max-lg:w-full">
-            {/* <OnePost /> */}
+            <OnePost />
           </div>
         </div>
         <div className="md:hidden block sticky bottom-0  z-50 w-full ">

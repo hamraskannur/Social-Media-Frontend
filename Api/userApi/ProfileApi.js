@@ -1,5 +1,4 @@
-import axios from "axios";
-import { userApi } from "../../utils/Apis/Apis";
+import { userApi,cloudApi } from "../../utils/Apis/Apis";
 
 export const getMyProfile = async () => {
   try {
@@ -35,17 +34,14 @@ export const uploadImage = async (image) => {
     const formData = new FormData();
     formData.append("file", image[0]);
     formData.append("upload_preset", "ete0nc34");
-    const { data } = await axios.post(
-      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD_API}/image/upload`,
-      formData
-    );
+    const { data } = await cloudApi.post(`/upload`,formData);
     return data?.secure_url;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const SaveUserData = async (formData) => {
+export const saveUserData = async (formData) => {
   try {
     const { data } = await userApi.put("/updateUserData", formData, {
       withCredentials: true,

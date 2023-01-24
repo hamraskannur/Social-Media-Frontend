@@ -11,13 +11,12 @@ import { MdOutlineNotifications } from "react-icons/md";
 import { AiOutlineSave } from "react-icons/ai";
 import { DiGitPullRequest } from "react-icons/di";
 import Link from "next/link";
-import { FiSettings } from "react-icons/fi";FiSettings
+import { FiSettings } from "react-icons/fi";
 import { sideBarAction } from "../../../redux/sideBar";
 import { useRouter } from "next/router";
 import AddPost from "../AddPost/AddPost";
 import { userActions } from "../../../redux/userAuth";
-import { checkUsePublic } from '../../../Api/userApi/ProfileApi'
-import { requestsCount } from "../../../Api/userApi/followRequest";
+
 
  const  UserSideBar = ()=> {
   const [showModal, setShowModal] = useState(false);
@@ -29,9 +28,8 @@ import { requestsCount } from "../../../Api/userApi/followRequest";
   const menus = [
     { name: "Home", link: "/", icon: BiHomeAlt },
     { name: "Messages", link: "/user/Messages", icon: BiMessageSquareDetail },
-    { name: "Notifications",link: "/user/notifications", icon: MdOutlineNotifications},
-    { name: "Create", link: "/user/create", icon: BiVideo },
     { name: "settings", link: "/user/settings", icon: FiSettings },
+    { name: "Notifications", link: "/user/Notifications", icon: MdOutlineNotifications },
   ];
   const user= useSelector((state) => state?.user?.user);
  useEffect(()=>{
@@ -50,8 +48,8 @@ import { requestsCount } from "../../../Api/userApi/followRequest";
   return (
     <>
     <div className="h-full sticky top-16  ">
-      <div className=" max-sm:hidden max-md:hidden max-lg:hidden border-r-4 border-slate-700 ">
-        <div className={`bg-white h-[92vh]  ${sideBar ? "w-72" : "w-16"} duration-500   text-black px-4  `}>
+      <div className="hidden md:inline-block border-r-4 border-slate-700 ">
+        <div className={`bg-white h-[91vh]  ${sideBar ? "w-72" : "w-16"} duration-500   text-black px-4  `}>
           <div className="py-3 flex justify-end">
             <HiMenuAlt3
               size={26}

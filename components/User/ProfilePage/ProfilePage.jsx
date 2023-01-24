@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import Router from "next/router";
 import { useSelector } from "react-redux";
 import { BsFillPeopleFill } from "react-icons/bs";
@@ -7,15 +7,15 @@ import PrivatePage from "./privatePage";
 import { followUser } from "../../../Api/userApi/followRequest";
 import { createChat } from "../../../Api/userApi/chatRequest";
 import { useRouter } from "next/router";
+import ShowUser from "../ShowUser/ShowUser";
 
 const ProfilePage = ({ userData, type }) => {
   const [PostCount, setPostCount] = useState(0);
   const router = useRouter();
   const userId = useSelector((state) => state?.user.user._id);
+  const [selectOption, setSelectOption] = useState("post");
   const [follow, setFollow] = useState(userData?.Followers.includes(userId));
-  const [Requested, setRequested] = useState(
-    userData?.Requests.includes(userId)
-  ); 
+  const [Requested, setRequested] = useState(userData?.Requests.includes(userId));
 
   const editUser = () => {
     Router.push("/user/EditProfile");
@@ -44,11 +44,10 @@ const ProfilePage = ({ userData, type }) => {
     }
   };
 
-  const createMessage= async (senderId) => {
-   const response=await createChat({senderId,receiverId:userId})
-   router.push("/user/Messages");
-
-  }
+  const createMessage = async (senderId) => {
+    const response = await createChat({ senderId, receiverId: userId });
+    router.push("/user/Messages");
+  };
   return (
     <div
       className=" bg-white  shadow:lg
@@ -133,7 +132,7 @@ const ProfilePage = ({ userData, type }) => {
             )}
             {!type && (
               <button
-                onClick={()=>createMessage(userData?._id)}
+                onClick={() => createMessage(userData?._id)}
                 className=" ml-5 flex justify-between bg-slate-700 hover:bg-gray-400 text-white font-bold py-1  px-4 rounded-l"
               >
                 Message
@@ -142,16 +141,16 @@ const ProfilePage = ({ userData, type }) => {
           </div>
         </div>
       </div>
-      <div className="flex  mt-2  justify-center">
+      <div  className="flex  mt-2  justify-center">
         {(userData?.public || type || follow) && (
-          <span className="bg-snow-drift-50 rounded-lg shadow-md w-28 shadow-heavy-metal-800 px-5 py-1 cursor-pointer hover:bg-snow-drift-300">
+          <span onClick={()=>{setSelectOption("post")}} className="bg-snow-drift-50 rounded-lg shadow-md w-28 shadow-heavy-metal-800 px-5 py-1 cursor-pointer hover:bg-snow-drift-300">
             <div className="flex justify-center">
               <p className="text-lg font-bold text-center ml-3">{PostCount}</p>
             </div>
             <p className="text-center">Posts</p>
           </span>
         )}
-        <span className="ml-2 bg-snow-drift-50 rounded-lg shadow-md w-28 shadow-heavy-metal-800 px-5 py-1 cursor-pointer hover:bg-snow-drift-300">
+        <span onClick={()=>{setSelectOption("Followers")}} className="ml-2 bg-snow-drift-50 rounded-lg shadow-md w-28 shadow-heavy-metal-800 px-5 py-1 cursor-pointer hover:bg-snow-drift-300">
           <div className="flex ">
             <div className="text-lg font-bold text-center mt-1">
               {React.createElement(BsFillPeopleFill, { size: "20" })}
@@ -162,7 +161,7 @@ const ProfilePage = ({ userData, type }) => {
           </div>
           <p className="text-center">Followers</p>
         </span>
-        <span className="ml-2 bg-snow-drift-50 rounded-lg shadow-md w-28 shadow-heavy-metal-800 px-5 py-1 cursor-pointer hover:bg-snow-drift-300">
+        <span onClick={()=>{setSelectOption("Following")}} className="ml-2 bg-snow-drift-50 rounded-lg shadow-md w-28 shadow-heavy-metal-800 px-5 py-1 cursor-pointer hover:bg-snow-drift-300">
           <div className="flex ">
             <div className="text-lg font-bold text-center mt-1">
               {React.createElement(BsFillPeopleFill, { size: "20" })}
@@ -177,22 +176,22 @@ const ProfilePage = ({ userData, type }) => {
 
       <div className="flex items-center justify-center mt-5">
         {(userData?.public || type) && (
-            <>
-              <div className="flex">
-                <div className="cursor-pointer hover:bg-[#bbc0c7] rounded-md font-medium hover:scale-110">
-                  <h1>Post</h1>
-                </div>
-                <div className="ml-14 cursor-pointer hover:bg-[#bbc0c7] rounded-md font-medium hover:scale-110">
-                  <h1>Shots</h1>
-                </div>
+          <>
+            <div className="flex">
+              <div className="cursor-pointer hover:bg-[#bbc0c7] rounded-md font-medium hover:scale-110">
+                <h1>Post</h1>
               </div>
               <div className="ml-14 cursor-pointer hover:bg-[#bbc0c7] rounded-md font-medium hover:scale-110">
-                <h1>Saved post</h1>
+                <h1>Shots</h1>
               </div>
-            </>
-          )}
+            </div>
+            <div className="ml-14 cursor-pointer hover:bg-[#bbc0c7] rounded-md font-medium hover:scale-110">
+              <h1>Saved post</h1>
+            </div>
+          </>
+        )}
       </div>
-      {(userData?.public || type || follow) && (
+      {(userData?.public || type || follow) && selectOption === "post" && (
         <div className="mt-5">
           <AllPost
             userId={userData?._id}
@@ -201,6 +200,16 @@ const ProfilePage = ({ userData, type }) => {
           />
         </div>
       )}
+
+      {(userData?.public || type || follow) && selectOption !="post" && (
+        <div className="mt-5">
+          <ShowUser
+            userId={userData?._id}
+            type={selectOption}
+          />
+        </div>
+      )}
+
       {!userData?.public && !type && !follow && (
         <div className="shadow-md shadow-gray-400">
           <PrivatePage />

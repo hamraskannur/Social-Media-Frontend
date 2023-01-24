@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { getUserData } from "../../../Api/userApi/profileApi";
-import { SaveUserData, uploadImage } from "../../../Api/userApi/profileApi";
+import { saveUserData, uploadImage,getUserData } from "../../../Api/userApi/profileApi";
 import { TiTick } from "react-icons/ti";
 
 import Head from "next/head";
@@ -28,24 +27,25 @@ const EditProfile = () => {
     setUserData({ ...userData, [name]: value });
   };
 
-  const submitHandler = async () => {
+  const submitHandler = async (e) => {
     if (userData.username.trim().length > 0) {
       if(userData.name.trim().length > 0){
 
         if (coverImg) {
-          const cover = await uploadImage(coverImg);
-          userData.coverImg = cover;
+          const coverImageLink = await uploadImage(coverImg);
+          userData.coverImg = coverImageLink;
           setCoverImg(null);
         }
         if (proImg) {
-          const pro = await uploadImage(proImg);
-          userData.ProfileImg = pro;
+          const proImageLink= await uploadImage(proImg);
+          userData.ProfileImg = proImageLink;
           setProImg(null);
         }
-        const response = await SaveUserData(userData);
+        const response = await saveUserData(userData);
         if (response?.success === true) {
           setSuccess(true);
         } else if (response?.success === "noUpdates") {
+          setSuccess(false)
           setNoUpdates(true);
         } else {
           setImgErr(response.message);
@@ -63,7 +63,7 @@ const EditProfile = () => {
     let file = e.target.files;
     const fileType = file[0]["type"];
     const validImageTypes = ["image/gif", "image/jpeg", "image/png"];
-    if (validImageTypes.includes(fileType)) {
+    if (validImageTypes.includes(fileType)){
       setCoverImg(e.target.files);
       setImgErr("");
     } else {
@@ -111,7 +111,7 @@ const EditProfile = () => {
               {imgErr && <small className="text-red-600">{imgErr}</small>}
               <button
                 onClick={submitHandler}
-                className="bg-pink-500 h-10 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                className="bg-slate-500  h-10 text-white active:bg-slate-500  font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                 type="button"
               >
                 Save
@@ -128,7 +128,7 @@ const EditProfile = () => {
             )}
              {noUpdates && (
               <div
-                class="flex items-center w-full m-4 bg-green-100 text-black text-sm font-bold px-4 py-3"
+                class="flex items-center w-full m-4 bg-green-200 text-white text-sm font-bold px-4 py-3"
                 role="alert"
               >
                 <p>nothing update you data</p>
@@ -138,7 +138,7 @@ const EditProfile = () => {
           <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
             <form>
               <h1 className="  text-blueGray-400 text-sm mt-5 mb-2 font-bold uppercase">
-                Edit image click in that image
+              click and Edit your image
               </h1>
 
               <div className="">
@@ -155,7 +155,7 @@ const EditProfile = () => {
                         ? URL?.createObjectURL(coverImg[0])
                         : userData?.coverImg
                         ? userData?.coverImg
-                        : "https://media.easemytrip.com/media/Blog/India/637033873695687971/637033873695687971fsrzol.jpg  "
+                        :"https://media.easemytrip.com/media/Blog/India/637033873695687971/637033873695687971fsrzol.jpg  "
                     }
                     alt="cover"
                   />

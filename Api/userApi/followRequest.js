@@ -58,3 +58,33 @@ export const deleteRequests = async (deleteId) => {
     console.log(error);
   }
 };
+
+
+export const getFollowingUser = async (usersId) => {
+  try {
+     const { data } =await userApi.get(`/getFollowingUser/${usersId}`, {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+   return data.user
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+export const getFollowersUser = async (usersId) => {
+  try {
+     const { data } =await userApi.get(`/getFollowersUser/${usersId}`, {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+   return data.user
+  } catch (error) {
+    console.log(error);
+  }
+}

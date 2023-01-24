@@ -29,11 +29,11 @@ const AllPost = ({userId ,type ,postCount}) => {
     <hr/>
       <div  className="grid grid-cols-3 gap-3 mt-5 ">
         {posts?.map((post) => (
-          <div onClick={()=>getOnePost(post.userId,post._id)}>
+          <div key={post._id} onClick={()=>getOnePost(post.userId,post._id)}>
             <img
               className="rounded-md overflow-hidden h-48 flex items-center object-cover"
-              src={post.img[0]}
-              // src='https://freepngimg.com/thumb/photography/59850-and-instagram-photography-black-logo-white.png  '
+              // src={post.img[0]}  
+              src='https://freepngimg.com/thumb/photography/59850-and-instagram-photography-black-logo-white.png  '
               alt="posts"
             />
           </div>

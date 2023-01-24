@@ -6,10 +6,10 @@ import { RiContactsFill } from "react-icons/ri";
 const Suggestion = (props) => {
   const sideBar = useSelector((state) => state?.sideBar?.sideBar);
   return (
-    <div className="p-4 py-1 top-24    ">
+    <div className=" p-4 py-1 top-20 z-0    sticky ">
       <div
         className=" bg-white  shadow:lg
-   shadow-gray-300 rounded-md p-4 mb-5 ml-20 w-full mt-6 "
+   shadow-gray-300 rounded-md p-4 mb-5  w-full mt-6 "
       >
         <h2 className="text-gray-400 mb-5">People you may know</h2>
         <div className="flex items-center gap-2 py-2 px-2 hover:bg-[#bbc0c7] hover:scale-105">

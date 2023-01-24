@@ -20,6 +20,15 @@ const Comment = ({ comment }) => {
   const [likeCount, setLikeCount] = useState(comment?.likes?.length);
   const [replayCommentCount, setReplayCommentCount] = useState(0);
 
+
+  const getUserAccount = () =>{
+    if (userId === user) {
+      router.push("/user/MyAccount");
+    } else {
+      router.push(`/user/getAccount/${user}`);
+    }
+  }
+
   useEffect(() => {
     const getReplayCommentReq = async () => {
       const response = await getReplayComment(comment._id);
@@ -75,7 +84,7 @@ const Comment = ({ comment }) => {
           />
         </div>
         <div className="ml-3 bg-gray-100 w-full rounded-md ">
-          <span className="mt-3 ml-1 italic text-sm cursor-pointer font-semibold">
+          <span onClick={()=>getUserAccount()} className="mt-3 ml-1 italic text-sm cursor-pointer font-semibold">
             {comment.username}
           </span>
 
@@ -132,7 +141,7 @@ const Comment = ({ comment }) => {
                 />
               </div>
               {AllReplayComment.map((data) => (
-                <ReplayComment data={data} userId={user._id}/>
+                <ReplayComment data={data} userId={user._id} key={data._id}/>
               ))}
             </>
           )}

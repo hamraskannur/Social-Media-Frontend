@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../../redux/userAuth";
 import { useRouter } from "next/router";
-import { getMyProfile } from "../../../Api/userApi/ProfileApi";
+import { getMyProfile } from "../../../Api/userApi/profileApi";
 
 const UserProtectRouter = ({ children }) => {
   const dispatch = useDispatch();

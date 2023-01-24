@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
-import { HYDRATE } from "next-redux-wrapper";
 
 const userAuth = createSlice({
   name: 'user',
