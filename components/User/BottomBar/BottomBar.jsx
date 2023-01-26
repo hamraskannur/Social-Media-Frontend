@@ -12,14 +12,14 @@ const BottomBar = () => {
 
   const menus = [
     { name: "Home", link: "/", icon: BiHomeAlt },
-    { name: "Messages", link: "/user/Messages", icon: BiMessageSquareDetail },  
+    { name: "Messages", link: "/user/messages", icon: BiMessageSquareDetail },  
     { name: "settings", link: "/user/settings", icon: FiSettings },
-    { name: "Notifications", link: "/user/Notifications", icon: MdOutlineNotifications }
+    { name: "Notifications", link: "/user/notifications", icon: MdOutlineNotifications }
   ];
   const logOut = (e) => {
     localStorage.clear();
     dispatch(userActions.userLogout());
-    router.push("/user/Login");
+    router.push("/user/login");
   };
   return (
     <>
@@ -34,7 +34,7 @@ const BottomBar = () => {
         ))}
 
             <Link
-            href="/user/Friends"
+            href="/user/friends"
             >
             <div  className="hover:bg-[#bbc0c7] rounded-md p-2">{React.createElement(DiGitPullRequest, { size: "20" })}</div>
             </Link>

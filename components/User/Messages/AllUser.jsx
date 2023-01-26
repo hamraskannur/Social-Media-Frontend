@@ -11,8 +11,7 @@ const AllUser = ({ data, currentUserId, onlineUsers }) => {
     };
     getUserData();
   }, []);
-  console.log(currentUserId);
-  console.log(onlineUsers);
+
   return (
     <>
       <div className=" flex flex-row py-4 px-2 h-full w2/6 justify-center items-center border-b-2 hover:bg-[#bbc0c7]">

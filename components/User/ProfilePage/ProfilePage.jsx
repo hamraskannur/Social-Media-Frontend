@@ -8,23 +8,29 @@ import { followUser } from "../../../Api/userApi/followRequest";
 import { createChat } from "../../../Api/userApi/chatRequest";
 import { useRouter } from "next/router";
 import ShowUser from "../ShowUser/ShowUser";
+import Post from "../Posts/Posts"
 
-const ProfilePage = ({ userData, type }) => {
-  const [PostCount, setPostCount] = useState(0);
-  const router = useRouter();
+const ProfilePage = ({ userData, type}) => {
   const userId = useSelector((state) => state?.user.user._id);
+  const router = useRouter();
+  const [PostCount, setPostCount] = useState(0);
   const [selectOption, setSelectOption] = useState("post");
   const [follow, setFollow] = useState(userData?.Followers.includes(userId));
   const [Requested, setRequested] = useState(userData?.Requests.includes(userId));
+  const [onePostId,setOnePostId]=useState(null)
+
+  const [followersCount,setFollowersCount]=useState(userData?.Followers?.length)
+  const [followingCount,setFollowingCount]=useState(userData?.Following?.length)
 
   const editUser = () => {
-    Router.push("/user/EditProfile");
+    Router.push("/user/editProfile");
   };
   const followUserHandler = async (followId) => {
     const response = await followUser({ followId });
     if (response.success) {
       if (!userData?.public) {
         if (follow) {
+          setFollowersCount(followersCount-1)
           setFollow(false);
         } else {
           if (Requested) {
@@ -35,8 +41,10 @@ const ProfilePage = ({ userData, type }) => {
         }
       } else {
         if (follow) {
+          setFollowersCount(followersCount-1)
           setFollow(false);
         } else {
+          setFollowersCount(followersCount+1)
           setFollow(true);
         }
       }
@@ -141,33 +149,42 @@ const ProfilePage = ({ userData, type }) => {
           </div>
         </div>
       </div>
-      <div  className="flex  mt-2  justify-center">
+      <div className="flex  mt-2  justify-center">
         {(userData?.public || type || follow) && (
-          <span onClick={()=>{setSelectOption("post")}} className="bg-snow-drift-50 rounded-lg shadow-md w-28 shadow-heavy-metal-800 px-5 py-1 cursor-pointer hover:bg-snow-drift-300">
+          <span
+            onClick={() => {setOnePostId(null),setSelectOption("post")}}
+            className="bg-snow-drift-50 rounded-lg shadow-md w-28 shadow-heavy-metal-800 px-5 py-1 cursor-pointer hover:bg-snow-drift-300"
+          >
             <div className="flex justify-center">
               <p className="text-lg font-bold text-center ml-3">{PostCount}</p>
             </div>
             <p className="text-center">Posts</p>
           </span>
         )}
-        <span onClick={()=>{setSelectOption("Followers")}} className="ml-2 bg-snow-drift-50 rounded-lg shadow-md w-28 shadow-heavy-metal-800 px-5 py-1 cursor-pointer hover:bg-snow-drift-300">
+        <span
+          onClick={() => {setOnePostId(null),setSelectOption("Followers");}}
+          className="ml-2 bg-snow-drift-50 rounded-lg shadow-md w-28 shadow-heavy-metal-800 px-5 py-1 cursor-pointer hover:bg-snow-drift-300"
+        >
           <div className="flex ">
             <div className="text-lg font-bold text-center mt-1">
               {React.createElement(BsFillPeopleFill, { size: "20" })}
             </div>
             <p className="text-lg font-bold text-center ml-3">
-              {userData?.Followers?.length}
+              {followersCount}
             </p>
           </div>
           <p className="text-center">Followers</p>
         </span>
-        <span onClick={()=>{setSelectOption("Following")}} className="ml-2 bg-snow-drift-50 rounded-lg shadow-md w-28 shadow-heavy-metal-800 px-5 py-1 cursor-pointer hover:bg-snow-drift-300">
+        <span
+          onClick={() => {setOnePostId(null), setSelectOption("Following");  }}
+          className="ml-2 bg-snow-drift-50 rounded-lg shadow-md w-28 shadow-heavy-metal-800 px-5 py-1 cursor-pointer hover:bg-snow-drift-300"
+        >
           <div className="flex ">
             <div className="text-lg font-bold text-center mt-1">
               {React.createElement(BsFillPeopleFill, { size: "20" })}
             </div>
             <p className="text-lg font-bold text-center ml-3">
-              {userData?.Following?.length}
+              {followingCount}
             </p>
           </div>
           <p className="text-center">Following</p>
@@ -178,35 +195,59 @@ const ProfilePage = ({ userData, type }) => {
         {(userData?.public || type) && (
           <>
             <div className="flex">
-              <div className="cursor-pointer hover:bg-[#bbc0c7] rounded-md font-medium hover:scale-110">
+              <div onClick={() => {setOnePostId(null) ,setSelectOption("post")}}
+                className="cursor-pointer hover:bg-[#bbc0c7] rounded-md font-medium hover:scale-110"
+              >
                 <h1>Post</h1>
               </div>
-              <div className="ml-14 cursor-pointer hover:bg-[#bbc0c7] rounded-md font-medium hover:scale-110">
-                <h1>Shots</h1>
-              </div>
             </div>
-            <div className="ml-14 cursor-pointer hover:bg-[#bbc0c7] rounded-md font-medium hover:scale-110">
+            <div
+              onClick={() =>{setOnePostId(null), setSelectOption("SavedPost")}}
+              className="ml-14 cursor-pointer hover:bg-[#bbc0c7] rounded-md font-medium hover:scale-110"
+            >
               <h1>Saved post</h1>
             </div>
           </>
         )}
       </div>
-      {(userData?.public || type || follow) && selectOption === "post" && (
+      {(userData?.public || type || follow) && !onePostId &&  selectOption === "post" && (
         <div className="mt-5">
           <AllPost
             userId={userData?._id}
             type={type}
+            SavedPost={false}
             postCount={setPostCount}
+            setOnePostId={setOnePostId}
+          />
+        </div>
+      )}
+          {(userData?.public || type || follow) && !onePostId && selectOption === "SavedPost" && (
+        <div className="mt-5">
+          <AllPost
+            userId={userData?._id}
+            SavedPost={true}
+            type={type}
+            postCount={setPostCount}
+            setOnePostId={setOnePostId}
+          />
+        </div>
+      )}
+         {(userData?.public || type || follow) && onePostId && (
+        <div className="mt-5">
+          <Post
+           onePost={true}
+            post={onePostId}
+            SavedPost={true}
+            type={type}
+            postCount={setPostCount}
+            setOnePostId={setOnePostId}
           />
         </div>
       )}
 
-      {(userData?.public || type || follow) && selectOption !="post" && (
+      {(userData?.public || type || follow) && selectOption != "post" && !onePostId && selectOption != "SavedPost" && (
         <div className="mt-5">
-          <ShowUser
-            userId={userData?._id}
-            type={selectOption}
-          />
+          <ShowUser userId={userData?._id} type={selectOption} />
         </div>
       )}
 

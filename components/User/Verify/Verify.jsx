@@ -13,7 +13,7 @@ function Verify() {
     event.preventDefault();
     const verify = await verifySignUp(userId,Token);
     if (verify.Status) {
-      router.push('/user/Login');
+      router.push('/user/login');
     } else {
       setErrMessage(verify.message);
     }

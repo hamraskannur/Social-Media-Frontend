@@ -27,9 +27,9 @@ import { userActions } from "../../../redux/userAuth";
 
   const menus = [
     { name: "Home", link: "/", icon: BiHomeAlt },
-    { name: "Messages", link: "/user/Messages", icon: BiMessageSquareDetail },
+    { name: "Messages", link: "/user/messages", icon: BiMessageSquareDetail },
     { name: "settings", link: "/user/settings", icon: FiSettings },
-    { name: "Notifications", link: "/user/Notifications", icon: MdOutlineNotifications },
+    { name: "Notifications", link: "/user/notifications", icon: MdOutlineNotifications },
   ];
   const user= useSelector((state) => state?.user?.user);
  useEffect(()=>{
@@ -42,7 +42,7 @@ import { userActions } from "../../../redux/userAuth";
   const logOut = (e) => {
     localStorage.clear();
     dispatch(userActions.userLogout());
-    router.push("/user/Login");
+    router.push("/user/login");
   };
  
   return (
@@ -84,7 +84,7 @@ import { userActions } from "../../../redux/userAuth";
 
          {!userPublic && <div className="mt-4 flex flex-col gap-4 relative">
          <Link
-                href='/user/Friends'
+                href='/user/friends'
                 className={`${router.pathname === '/user/Friends' ? "bg-[#bbc0c7] " : ""} group flex items-center text-sm gap-3.5  font-medium p-2 hover:bg-[#bbc0c7]  rounded-md`}
               >
          

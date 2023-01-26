@@ -24,7 +24,7 @@ const UserProtectRouter = ({ children }) => {
     };
     publicFu();
     if (!localStorage.getItem("token")) {
-      router.push("/user/Login");
+      router.push("/user/login");
     }
   }, [token]);
 

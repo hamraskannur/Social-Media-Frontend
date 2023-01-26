@@ -4,6 +4,7 @@ export const signUp = async (formData) => {
   try {
     const { data } = await userApi.post("/register", formData);
     return data.userSignup;
+    
   } catch (error) {
     console.log(error);
   }

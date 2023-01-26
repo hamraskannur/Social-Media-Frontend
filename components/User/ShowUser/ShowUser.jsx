@@ -7,22 +7,19 @@ import {
   getFollowersUser,
 } from "../../../Api/userApi/followRequest";
 
-const ShowUser = ({ type, userId }) => {
+const  ShowUser = ({ type, userId }) => {
   const user = useSelector((state) => state?.user?.user._id);
 
   const router = useRouter();  
   const [users, setUsers] = useState();
   useEffect(() => {
-    console.log(type);
     const getUserData = async (type) => {
       if (type === "Following") {
         const user = await getFollowingUser(userId);
-        console.log(user);
         setUsers(user);
       }
       if (type === "Followers") {
         const user = await getFollowersUser(userId);
-        console.log(user);
         setUsers(user);
       }
     };
@@ -33,7 +30,7 @@ const ShowUser = ({ type, userId }) => {
   const goToAccountPage=(userId)=>{
 
     if (user === userId) {
-      router.push("/user/MyAccount");
+      router.push("/user/myAccount");
     } else {
       router.push(`/user/getAccount/${userId}`);
     }

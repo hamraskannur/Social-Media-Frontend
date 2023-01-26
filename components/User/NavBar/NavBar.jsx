@@ -14,7 +14,7 @@ function NavBar() {
         GatherUnite
       </h2>
       <div className="flex gap-4  items-center">
-        <Link href="/user/MyAccount">
+        <Link href="/user/myAccount">
           <div className="flex ">
             <div className=" w-8 rounded-full border-white border overflow-hidden shadow-sm shadow-gray-500">
               <img

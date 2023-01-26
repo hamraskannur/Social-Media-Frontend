@@ -6,6 +6,7 @@ import {
   likeMainComment,
   postReplayComment,
 } from "../../../Api/userApi/postRequest";
+import { MdDelete } from "react-icons/md"
 import { useSelector } from "react-redux";
 import ReplayComment from "./ReplayComment";
 import InputEmoji from "react-input-emoji";
@@ -23,7 +24,7 @@ const Comment = ({ comment }) => {
 
   const getUserAccount = () =>{
     if (userId === user) {
-      router.push("/user/MyAccount");
+      router.push("/user/myAccount");
     } else {
       router.push(`/user/getAccount/${user}`);
     }
@@ -94,6 +95,7 @@ const Comment = ({ comment }) => {
           >
             {comment.createdAt}
           </Moment>
+        
           <div className="info ml-3 mt-2 text-sm">
             <p>{comment.comment}</p>
           </div>

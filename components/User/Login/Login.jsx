@@ -48,11 +48,11 @@ function Login() {
   
   };
   const handleGoogleLogin = async () => {
-    signIn("google", { callbackUrl: "http://localhost:3000/user/LoginWait" });
+    signIn("google", { callbackUrl: "http://localhost:3000/user/loginWait" });
     
   };
   const handleGithubLogin = async () => {
-    signIn("github", { callbackUrl: "http://localhost:3000/user/LoginWait" });
+    signIn("github", { callbackUrl: "http://localhost:3000/user/loginWait" });
 
   }
   return (
@@ -134,7 +134,7 @@ function Login() {
                     type="button"
                     className=" text-sm text-slate-900 cursor-pointer"
                     onClick={() => {
-                      router.push("/user/Signup");
+                      router.push("/user/signup");
                     }}
                   >
                     Don't have an account? Sign up

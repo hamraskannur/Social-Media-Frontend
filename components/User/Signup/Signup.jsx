@@ -254,7 +254,7 @@ function Signup() {
                 <small
                   role="presentation"
                   className="text-slate-900 cursor-pointer"
-                  onClick={() => router.push("/user/Login")}
+                  onClick={() => router.push("/user/login")}
                 >
                   Have an account? Login
                 </small>
@@ -273,7 +273,7 @@ function Signup() {
                     type="button"
                     className="bg-slate-500 text-white rounded-md px-2 py-1"
                   >
-                    Sign up
+                    sign up
                   </button>
                 </div>
              

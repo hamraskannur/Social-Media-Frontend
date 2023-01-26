@@ -50,7 +50,7 @@ export const getOnePost = async (userId, PostId) => {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     });
-    return data
+    return data;
   } catch (error) {
     console.log(error);
   }
@@ -185,6 +185,34 @@ export const getReplayComment = async (commentId) => {
 export const likeReplayComment = async (formData) => {
   try {
     const { data } = await userApi.post("/likeReplayComment", formData, {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const savePost = async (formData) => {
+  try {
+    const { data } = await userApi.put("/savePost", formData, {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+  
+export const getSavedPost = async (userId) => {
+  try {
+    const { data } = await userApi.get(`/getSavedPost/${userId}`, {
       withCredentials: true,
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
