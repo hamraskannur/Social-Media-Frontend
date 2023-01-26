@@ -7,8 +7,8 @@ import {
   getFollowersUser,
 } from "../../../Api/userApi/followRequest";
 
-const  ShowUser = ({ type, userId }) => {
-  const user = useSelector((state) => state?.user?.user._id);
+const  ShowUser = ({ type, userId ,admin}) => {
+  const user = useSelector((state) => state?.user?.user?._id);
 
   const router = useRouter();  
   const [users, setUsers] = useState();
@@ -28,12 +28,24 @@ const  ShowUser = ({ type, userId }) => {
 
 
   const goToAccountPage=(userId)=>{
-
-    if (user === userId) {
-      router.push("/user/myAccount");
-    } else {
-      router.push(`/user/getAccount/${userId}`);
-    }
+   if(admin){
+    router.push(
+      {
+        pathname: "/admin/oneUser",
+        query: {
+          userId: userId,
+          admin:true
+        },
+      },
+      "/admin/getviewUser"
+    )
+   }else{
+     if (user === userId) {
+       router.push("/user/myAccount");
+     } else {
+       router.push(`/user/getAccount/${userId}`);
+     }
+   }
 
   }
   return (
@@ -46,7 +58,7 @@ const  ShowUser = ({ type, userId }) => {
           <div>
             <div className="border-b p-4 -mx-4 border-b-heavy-metal-300 hover:bg-snow-drift-100">
               <div className="flex gap-3">
-                <div onClick={()=>goToAccountPage(user?.result?._id)} className="flex gap-3">
+                <div onClick={()=>goToAccountPage(user?.result?._id)} className="flex gap-3 cursor-pointer">
                   <div className="w-12 h-12 rounded-full overflow-hidden shadow-sm shadow-gray-500">
                     <img src={user?.result?.ProfileImg} alt="avatars" />
                   </div>

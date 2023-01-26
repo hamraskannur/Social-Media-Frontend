@@ -5,7 +5,8 @@ import { getFriendsAccount } from '../../../Api/userApi/postRequest';
 
 const FriendsAccount = () => {
     const router = useRouter()
-    const { userId }  = router.query
+    const { userId,admin }  = router.query
+    console.log(userId);
     const [userData, setUserData] = useState([])
     
     useEffect(()=>{
@@ -20,7 +21,7 @@ const FriendsAccount = () => {
 
   return (
     <div>
-   {userData[0] && <ProfilePage userData={userData[0]} type={false}  />}
+   {userData[0] && <ProfilePage userData={userData[0]} type={false} admin={admin}  />}
     </div>
   )
 }

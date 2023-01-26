@@ -34,6 +34,8 @@ function Login() {
     );
     if (response?.Status) {
       localStorage.setItem("token", response.token);
+      localStorage.setItem("user", true);
+
 
       dispatch(
         userActions.userAddDetails({

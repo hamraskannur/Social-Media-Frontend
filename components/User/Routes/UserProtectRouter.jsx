@@ -12,7 +12,7 @@ const UserProtectRouter = ({ children }) => {
   let userData;
   useEffect(() => {
     const publicFu = async () => {
-      if (token || localStorage.getItem("token")) {
+      if (token || localStorage.getItem("token") && localStorage.getItem("user")) {
         userData = await getMyProfile();
         dispatch(
           userActions.userAddDetails({
@@ -23,12 +23,11 @@ const UserProtectRouter = ({ children }) => {
       }
     };
     publicFu();
-    if (!localStorage.getItem("token")) {
+    if (!localStorage.getItem("user")) {
       router.push("/user/login");
     }
   }, [token]);
-
-  if (token) {
+  if (token && localStorage.getItem("user")) {
     return children;
   }
 };

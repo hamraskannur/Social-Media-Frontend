@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { getSavedPost, getUserAllPost } from "../../../Api/userApi/postRequest";
 
 const AllPost = ({ userId, type, postCount, SavedPost,setOnePostId }) => {
-  const user = useSelector((state) => state?.user?.user);
   const [posts, setPosts] = useState([]);
   let newPost;
   useEffect(() => {
@@ -48,7 +47,7 @@ const AllPost = ({ userId, type, postCount, SavedPost,setOnePostId }) => {
         ))}
       </div>
 
-      {posts.length === 0 && type && (
+      {posts.length === 0  && type && (
         <div className="">
           <div className="flex justify-center  bg-white">
             <img

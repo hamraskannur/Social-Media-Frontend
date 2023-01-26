@@ -31,9 +31,10 @@ function AdminLogin() {
     event.preventDefault();
     const response = await adminLogin({ email: enteredEmail, password: enteredPassword });
     if (response.Status) {
-      localStorage.setItem('AdminToken', response.token);
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('admin', true);
       dispatch(adminActions.AddAdmin({ token: response.token }));
-      router.push('/Admin');
+      router.push('/admin');
     } else {
       setErrMessage(response.message);
     }

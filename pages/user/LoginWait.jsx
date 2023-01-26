@@ -22,6 +22,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
     GoogleLogin(userData).then((data) => {
       if (data.Status) {
         localStorage.setItem("token", data.token);
+        localStorage.setItem("user", true);
 
         dispatch(
           userActions.userAddDetails({

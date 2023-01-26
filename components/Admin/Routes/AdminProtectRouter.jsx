@@ -1,22 +1,37 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/destructuring-assignment */
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
-import { adminActions } from '../../../redux/adminAuth';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "../../../redux/userAuth";
+import { useRouter } from "next/router";
+import { getMyProfile } from "../../../Api/userApi/profileApi";
 
-function AdminProtectRouter(props) {
+const UserProtectRouter = ({ children }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
+  const token = useSelector((state) => state?.user?.userToken);
+  let userData;
   useEffect(() => {
-    dispatch(adminActions.AddAdmin({ token: localStorage.getItem('AdminToken') }));
-  }, []);
+    const publicFu = async () => {
+      if (token || localStorage.getItem("token")) {
+        userData = await getMyProfile();
+        dispatch(
+          userActions.userAddDetails({
+            token: localStorage.getItem("token"),
+            user: userData[0],
+          })
+        );
+      }
+    };
+    publicFu();
+    if (!localStorage.getItem("admin")) {
+      router.push("/admin/login");
+    }
+    
+  }, [token]);
 
-  const admin = useSelector((state) => state?.admin?.adminToken);
-  if (admin) {
-    return props.children;
+  if (token) {
+    return children;
   }
-  return <Navigate to="/admin/login" />;
-}
+};
 
-export default AdminProtectRouter;
+export default UserProtectRouter;

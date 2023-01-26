@@ -6,11 +6,7 @@ import { useSelector } from "react-redux";
 const Post = () => {
   const [posts, setPosts] = useState([]);
   let newPost;
-  const update = useSelector((state) => state.addPost.AddPost);
-
-
-  // const {data,error}= useSWR("post",getAllPosts)
- 
+  const update = useSelector((state) => state.addPost.AddPost); 
   useEffect(() => {
     const getPost = async () => {
       newPost = await getAllPosts();

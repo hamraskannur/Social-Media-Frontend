@@ -11,11 +11,10 @@ import { BsPencilSquare } from "react-icons/bs"
 import Comments from "./Comments";
 import Avatar from "./Avatar";
 import { likePostReq, savePost } from "../../../Api/userApi/postRequest";
-import EditPost from "../editPost/editPost";
 
-function Post({ post,onePost }) {
+function Post({ post,onePost,admin }) {
   const user = useSelector((state) => state?.user?.user);
-  const userId = user._id;
+  const userId = user?._id;
   const router = useRouter();
   const [currentUser,setCurrentUser]=useState(false)
   const [like, setLike] = useState(post?.likes?.includes(userId));
@@ -31,10 +30,24 @@ function Post({ post,onePost }) {
   },[post])
 
   const getAccountPage = async (user) => {
-    if (userId === user) {
-      router.push("/user/myAccount");
-    } else {
-      router.push(`/user/getAccount/${user}`);
+    if(admin){
+      router.push(
+        {
+          pathname: "/admin/oneUser",
+          query: {
+            userId: userId,
+            admin:true
+          },
+        },
+        "/admin/getviewUser"
+      )
+    }else{
+
+      if (userId === user) {
+        router.push("/user/myAccount");
+      } else {
+        router.push(`/user/getAccount/${user}`);
+      }
     }
   };
   const handleSavePost = async (postId) => {
@@ -90,7 +103,7 @@ function Post({ post,onePost }) {
               <Moment fromNow>{post?.createdAt}</Moment>
             </p>
           </div>
-          <div className="">
+        { !admin && <div className="">
             <button
               type="button"
               className="text-gray-400"
@@ -118,7 +131,7 @@ function Post({ post,onePost }) {
             >
               <div className="relative">
                 {dropdownOpen && !currentUser && (
-                  <div className="absolute right-6 border border-gray-300 bg-white shadow-md shadow-gray-100 p-3 rounded-md w-36">
+                  <div className="cursor-pointer absolute right-6 border border-gray-300 bg-white shadow-md shadow-gray-100 p-3 rounded-md w-36">
                     <div className="cursor-pointer" onClick={() => handleSavePost(post?._id)}>
                       {savedStatus ?<p
                         href=""
@@ -184,8 +197,8 @@ function Post({ post,onePost }) {
                     </p>
                   </div>
                 )}
-                  {dropdownOpen && currentUser && (
-                  <div className="absolute right-6 border border-gray-300 bg-white shadow-md shadow-gray-100 p-3 rounded-md w-36">
+                  {dropdownOpen && currentUser && !admin &&  (
+                  <div className="cursor-pointer absolute right-6 border border-gray-300 bg-white shadow-md shadow-gray-100 p-3 rounded-md w-36">
                      <div className="cursor-pointer" onClick={() => handleSavePost(post?._id)}>
                       {savedStatus ?<p
                         href=""
@@ -230,6 +243,7 @@ function Post({ post,onePost }) {
                       </p>}
                     </div>
                     
+
                     
                     <div className="cursor-pointer" onClick={() => handleSavePost(post?._id)}>
                       <p
@@ -253,9 +267,9 @@ function Post({ post,onePost }) {
                 )}
               </div>
             </OutsideClickHandler>
-          </div>
+          </div>}
         </div>
-        <div>
+         <div>
           <p className="my-3 max-w-6xl text-sm">{post?.description}</p>
           <div className="rounded-md overflow-hidden w-full">
             <img
@@ -266,7 +280,7 @@ function Post({ post,onePost }) {
             />
           </div>
         </div>
-        <div className="flex mt-5 gap-4">
+        {!admin && <> <div className="flex mt-5 gap-4">
           <button type="button" className="flex gap-2 items-center">
             {like ? (
               <div onClick={() => likePost(post._id)}>
@@ -311,14 +325,13 @@ function Post({ post,onePost }) {
           >
             copy Link
           </button>
-        </div>
-        <div className="mt-3">
+        </div> </>}
+       {!admin && <div className="mt-3">
           {commentsOpen && (
             <Comments postId={post?._id} setCount={setCount} count={count} />
           )}
-        </div>
+        </div>}
       </div>
-        <EditPost />
     </>
   );
 }
