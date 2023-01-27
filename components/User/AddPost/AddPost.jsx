@@ -76,7 +76,7 @@ export default function AddPost({ AddPost, setAddPost }) {
         setImageLinks([])
         object.imageLinks=null
         object.description=null
-        dispatch(AddPostActions.postAdd())
+       await  dispatch(AddPostActions.postAdd())
         setAddPost(false)
       }else{
         setMessage("err");

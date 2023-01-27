@@ -14,7 +14,7 @@ const Post = () => {
       setPosts(newPost);
     };
     getPost();
-  }, [update === true]);
+  }, [update]);
 
   return (
     <div>

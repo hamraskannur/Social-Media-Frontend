@@ -223,3 +223,18 @@ export const getSavedPost = async (userId) => {
     console.log(error);
   }
 };
+
+export const deletePost = async (postId) => {
+  try {
+
+    const { data } =await userApi.delete(`/deletePost/${postId}`, {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+    return data
+  } catch (error) {
+    console.log(error);
+  } 
+}

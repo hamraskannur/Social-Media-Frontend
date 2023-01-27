@@ -18,9 +18,9 @@ function SideBar() {
     localStorage.clear();
     router.push("/user/login");
   };
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   return (
-    <div className="max-sm:absolute max-md:absolute max-lg:absolute  sticky top-16   ">
+    <div className="max-sm:absolute max-md:absolute max-lg:absolute  sticky top-0   ">
       <div
         className={`bg-[#F9F9F9] min-h-screen ${
           open ? 'w-72' : 'w-16'
