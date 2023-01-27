@@ -257,3 +257,18 @@ export const editePost = async (postData) => {
     console.log(error);
   } 
 }
+
+export const reportPost = async (postData) => {
+  try {
+
+    const { data } =await userApi.put("/reportPost",postData, {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+    return data
+  } catch (error) {
+    console.log(error);
+  } 
+}
