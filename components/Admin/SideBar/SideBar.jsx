@@ -12,7 +12,7 @@ function SideBar() {
   const menus = [
     { name: 'Dashboard', link: '/', icon: RiDashboardLine },
     { name: 'Users', link: '/admin/showUsers', icon: ImUsers },
-    { name: 'Advertisement', link: '/admin/Advertisement', icon: RiAdvertisementFill },
+    { name: 'Advertisement', link: '/admin/advertisement', icon: RiAdvertisementFill },
   ];
   const logOut = (e) => {
     localStorage.clear();
