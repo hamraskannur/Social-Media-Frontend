@@ -5,11 +5,22 @@ import UserSideBar from "../../components/User/UserSideBar/UserSideBar";
 import Suggestion from "../../components/User/Suggestion/Suggestion";
 import UserProtectRouter from "../../components/User/Routes/UserProtectRouter";
 import BottomBar from "../../components/User/BottomBar/BottomBar";
+import { useSelector } from "react-redux";
+import LoadingBar from "react-top-loading-bar";
 
 const MessagesPage = () => {
+  const { progress } = useSelector((state) => state.loader);
+
+
   return (
     <UserProtectRouter>
-      <div className="bg-[#F3F3F6]">
+       <LoadingBar
+        color="#f11946"
+        progress={progress}
+        height={3}
+        loaderSpeed={1000}
+      />
+      {progress===100 && <div className="bg-[#F3F3F6]">
         <NavBar />
         <div className="flex ">
           <UserSideBar />
@@ -20,7 +31,7 @@ const MessagesPage = () => {
         <div className="md:hidden block sticky bottom-0 z-50 w-full ">
           <BottomBar />
         </div>
-      </div>
+      </div>}
     </UserProtectRouter>
   );
 };

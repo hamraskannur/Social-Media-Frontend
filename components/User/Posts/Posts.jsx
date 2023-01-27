@@ -18,6 +18,7 @@ import {
   likePostReq,
   savePost,
 } from "../../../Api/userApi/postRequest";
+import EditPost from "../editPost/editPost";
 
 function Post({ post, onePost, admin }) {
   const user = useSelector((state) => state?.user?.user);
@@ -31,6 +32,7 @@ function Post({ post, onePost, admin }) {
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [PostLength, setPostLength] = useState(post?.likes?.length);
   const [savedStatus, setSavedStatus] = useState(false);
+  const [editPost,setEditPost] = useState(false)
 
   useEffect(() => {
     setSavedStatus(user?.saved?.includes(post?._id));
@@ -292,7 +294,7 @@ function Post({ post, onePost, admin }) {
                         )}
                       </div>
 
-                      <div className="cursor-pointer">
+                      <div onClick={()=>setEditPost(true)} className="cursor-pointer">
                         <p
                           href=""
                           className="flex gap-3 py-2 my-2 hover:bg-[#bbc0c7] -mx-2 px-2 rounded-md transition-all hover:shadow-md shadow-gray-400"
@@ -389,6 +391,7 @@ function Post({ post, onePost, admin }) {
             )}
           </div>
         )}
+       {editPost && <EditPost img={post?.img[0]} description={post?.description} postId={post?._id} setEditPost={setEditPost}/>}
       </div>
     </>
   );

@@ -1,4 +1,5 @@
 import { userApi } from "../../utils/Apis/Apis";
+import { startLoading,completedLoading } from '../../redux/topLoadingBar'
 
 export const addPost = async (formData) => {
   try {
@@ -16,12 +17,14 @@ export const addPost = async (formData) => {
 
 export const getAllProduct = async () => {
   try {
+    dispatch(startLoading())
     const { data } = await userApi.get("/getMyPost", {
       withCredentials: true,
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
-    });
+    }); 
+    dispatch(completedLoading())
     return data.allPost;
   } catch (error) {
     console.log(error);
@@ -228,6 +231,22 @@ export const deletePost = async (postId) => {
   try {
 
     const { data } =await userApi.delete(`/deletePost/${postId}`, {
+      withCredentials: true,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+    return data
+  } catch (error) {
+    console.log(error);
+  } 
+}
+
+
+export const editePost = async (postData) => {
+  try {
+
+    const { data } =await userApi.put("/editPost",postData, {
       withCredentials: true,
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),

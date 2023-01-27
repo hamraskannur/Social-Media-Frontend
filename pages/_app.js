@@ -4,15 +4,15 @@ import store from "../redux/store";
 import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
 
-
 export default function App({ Component, pageProps }) {
+ 
   return (
     <Provider store={store}>
       <Head>
         <title>Locomate</title>
       </Head>
       <SessionProvider session={pageProps.session}>
-          <Component {...pageProps} />
+        <Component {...pageProps} />
       </SessionProvider>
     </Provider>
   );

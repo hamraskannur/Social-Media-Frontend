@@ -8,6 +8,7 @@ export const userChat = async (userId) => {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     });
+   
     return data;
   } catch (error) {
     console.log(error);
